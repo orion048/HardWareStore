@@ -3,9 +3,9 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://postgres:5432/userdb
-    username: user
-    password: password
+    url: jdbc:postgresql://postgres:5432/postgres
+    username: postgres
+    password: orion
 
   jpa:
     hibernate:

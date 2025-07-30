@@ -1,3 +1,11 @@
+package com.project.Service;
+
+import com.project.Entity.User;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class UserService {
 

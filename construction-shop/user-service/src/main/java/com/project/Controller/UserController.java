@@ -1,3 +1,12 @@
+package com.project.Controller;
+
+import com.project.Entity.User;
+import com.project.Service.UserService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
