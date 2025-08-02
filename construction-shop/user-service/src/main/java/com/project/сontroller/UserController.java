@@ -1,8 +1,12 @@
 package com.project.сontroller;
 
 import com.project.dto.RegisterRequest;
+import com.project.dto.UpdateUserRequest;
+import com.project.dto.UserResponse;
+import com.project.exception.UserNotFoundException;
 import com.project.model.User;
 import com.project.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,17 +36,26 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getById(@PathVariable Long id) {
-        return service.getUserById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<UserResponse> getUser(@PathVariable Long id) {
+        User user = service.getUserById(id)
+                .orElseThrow(() -> new UserNotFoundException("Пользователь не найден"));
+        return ResponseEntity.ok(new UserResponse(user));
     }
+
 
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<UserResponse> updateUser(
+            @PathVariable Long id,
+            @Valid @RequestBody UpdateUserRequest request) {
+        User updatedUser = service.updateUser(id, request);
+        return ResponseEntity.ok(new UserResponse(updatedUser));
     }
 
 }

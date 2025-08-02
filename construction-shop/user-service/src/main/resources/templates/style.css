@@ -1,0 +1,15 @@
+.error-message {
+    color: red;
+    margin-bottom: 10px;
+}
+
+.logout-message {
+    color: green;
+    margin-bottom: 10px;
+}
+
+.login-container {
+    width: 300px;
+    margin: auto;
+    padding-top: 50px;
+}
