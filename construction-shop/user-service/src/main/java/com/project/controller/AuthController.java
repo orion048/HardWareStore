@@ -1,12 +1,14 @@
-package com.project.сontroller;
+package com.project.controller;
 
 import com.project.dto.AuthRequest;
 import com.project.dto.AuthResponse;
+import com.project.dto.RegisterRequest;
 import com.project.exception.InvalidLoginException;
 import com.project.model.User;
 import com.project.repository.UserRepository;
 import com.project.security.CustomUserDetailsService;
 import com.project.security.JwtUtil;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,14 +16,17 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 // controller/AuthController.java
-@RestController
+@Component
+@Controller
 @RequestMapping("/auth")
 public class AuthController {
+
     @Autowired
     private AuthenticationManager authManager;
     @Autowired
@@ -33,10 +38,12 @@ public class AuthController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    // ======= API =======
     @PostMapping("/login")
+    @ResponseBody
     public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest request) {
         try {
-        authManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
+            authManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
         } catch (BadCredentialsException ex) {
             throw new InvalidLoginException("Неверный логин или пароль");
         }
@@ -46,6 +53,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
+    @ResponseBody
     public ResponseEntity<String> register(@RequestBody AuthRequest request) {
         User user = new User();
         user.setUsername(request.getUsername());
@@ -54,18 +62,29 @@ public class AuthController {
         return ResponseEntity.ok("User registered successfully");
     }
 
-
-        @GetMapping("/login")
-        public String loginPage(@RequestParam(value = "error", required = false) String error,
-                                @RequestParam(value = "logout", required = false) String logout,
-                                Model model) {
-            if (error != null) {
-                model.addAttribute("errorMessage", "Неверный логин или пароль");
-            }
-            if (logout != null) {
-                model.addAttribute("logoutMessage", "Вы вышли из системы");
-            }
-            return "login"; // имя Thymeleaf-шаблона
+    // ======= HTML Views =======
+    @GetMapping("/login")
+    public String loginPage(@RequestParam(value = "error", required = false) String error,
+                            @RequestParam(value = "logout", required = false) String logout,
+                            Model model) {
+        if (error != null) {
+            model.addAttribute("errorMessage", "Неверный логин или пароль");
         }
+        if (logout != null) {
+            model.addAttribute("logoutMessage", "Вы вышли из системы");
+        }
+        return "login";
+    }
+
+    @PostConstruct
+    public void init() {
+        System.out.println("🔧 AuthController инициализирован!");
+    }
+
+    @GetMapping("/register")
+    public String showRegisterForm(Model model) {
+        model.addAttribute("user", new RegisterRequest());
+        return "register";
+    }
 }
 

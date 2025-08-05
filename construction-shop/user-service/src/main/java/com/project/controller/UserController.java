@@ -1,4 +1,4 @@
-package com.project.сontroller;
+package com.project.controller;
 
 import com.project.dto.RegisterRequest;
 import com.project.dto.UpdateUserRequest;
@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 
 @RestController
