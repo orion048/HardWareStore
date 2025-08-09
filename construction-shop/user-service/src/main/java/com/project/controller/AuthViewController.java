@@ -27,4 +27,9 @@ public class AuthViewController {
         model.addAttribute("user", new RegisterRequest());
         return "register"; // имя HTML-шаблона (register.html)
     }
+
+    @GetMapping("/homeUser")
+    public String showHome(Model model) {
+        return "User"; // имя HTML-шаблона (register.html)
+    }
 }

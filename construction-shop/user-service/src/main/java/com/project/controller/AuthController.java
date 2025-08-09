@@ -26,7 +26,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 // controller/AuthController.java
-@RestController
+@Controller
 @RequestMapping("/auth")
 public class AuthController {
 
@@ -58,30 +58,25 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    @ResponseBody
-    public ResponseEntity<String> register(@ModelAttribute("user") RegisterRequest request) {
-        System.out.println(">>> Inside createUser method");
+    public String register(@ModelAttribute("user") RegisterRequest request, Model model) {
         try {
-            System.out.println("Сохраняем пользователя: " + request);
-            logger.debug("Received request to create user: {}", request);
             User user = new User();
             user.setUsername(request.getUsername());
             user.setEmail(request.getEmail());
             user.setPassword(passwordEncoder.encode(request.getPassword()));
             user.setRole(Role.CUSTOMER);
-            System.out.println("Username: " + request.getUsername());
-            System.out.println("Email: " + request.getEmail());
-            System.out.println("Password: " + request.getPassword());
+            userRepository.save(user);
 
-            User savedUser = userRepository.save(user);
-            System.out.println("Saved user ID: " + savedUser.getId());
+            // Передаём имя пользователя в шаблон
+            model.addAttribute("username", user.getUsername());
 
-            return ResponseEntity.ok("User registered successfully");
+            // Возвращаем имя Thymeleaf-шаблона (registration-success.html)
+            return "reg-success";
         } catch (Exception e) {
             System.err.println("Ошибка при регистрации: " + e.getMessage());
-            e.printStackTrace(); // 👈 покажет стек вызовов
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Ошибка при регистрации: " + e.getMessage());
+            e.printStackTrace();
+            model.addAttribute("errorMessage", "Ошибка при регистрации: " + e.getMessage());
+            return "registration-error"; // Можно создать отдельный шаблон для ошибок
         }
     }
 }
