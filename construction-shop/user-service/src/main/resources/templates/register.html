@@ -2,11 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/styleRegister.css}" />
     <title>Регистрация</title>
 </head>
 <body>
 <h2>Регистрация</h2>
-<form th:action="@{/api/users/register}" th:object="${user}" method="post">
+<form th:action="@{/auth/register}" th:object="${user}" method="post">
+
     <label>Имя пользователя:</label>
     <input type="text" th:field="*{username}" required/><br/>
 

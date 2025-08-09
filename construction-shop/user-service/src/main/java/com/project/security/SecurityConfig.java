@@ -23,30 +23,26 @@ public class SecurityConfig {
     private JwtFilter jwtFilter;
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable()
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        return http
+                .csrf(csrf -> csrf.disable()) // 👈 или включи и добавь CSRF-токен в форму
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(
+                        .requestMatchers("/auth/register",
                                 "/auth/login",
-                                "/auth/register",
-                                "/css/**", "/images/**",
-                                "/js/**",
-                                "/api/auth/**"
-                        ).permitAll()
+                                "/auth/**",
+                                "/css/**",        // 👈 стили
+                                "/js/**",         // 👈 скрипты
+                                "/images/**",     // 👈 картинки
+                                "/webjars/**" ).permitAll() // 👈 разрешаем доступ
                         .anyRequest().authenticated()
                 )
-                .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                ).formLogin(form -> form
-                        .loginPage("/auth/login")
+                .formLogin(form -> form
+                        .loginPage("/auth/login") // 👈 твоя кастомная страница логина
                         .permitAll()
-                );
-
-
-         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
-
-        return http.build();
+                )
+                .build();
     }
+
 
 
 
@@ -60,3 +56,4 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 }
+

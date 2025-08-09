@@ -3,7 +3,7 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/hardwarestore
+    url: jdbc:postgresql://localhost:5432/hardwarestore?currentSchema=user_service
     username: postgres
     password: orion
     driver-class-name: org.postgresql.Driver
@@ -14,6 +14,14 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: update
+
+  logging:
+    level:
+      org.hibernate.SQL: DEBUG
+      org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+      com.project.controller: DEBUG
+      com.project.repository: DEBUG
+      org.springframework: INFO
 
   thymeleaf:
     cache: false

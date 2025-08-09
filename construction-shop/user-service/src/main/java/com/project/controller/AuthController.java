@@ -4,12 +4,14 @@ import com.project.dto.AuthRequest;
 import com.project.dto.AuthResponse;
 import com.project.dto.RegisterRequest;
 import com.project.exception.InvalidLoginException;
+import com.project.model.Role;
 import com.project.model.User;
 import com.project.repository.UserRepository;
 import com.project.security.CustomUserDetailsService;
 import com.project.security.JwtUtil;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -20,10 +22,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 // controller/AuthController.java
-@Component
-@Controller
+@RestController
 @RequestMapping("/auth")
 public class AuthController {
 
@@ -37,6 +40,8 @@ public class AuthController {
     private UserRepository userRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
 
     // ======= API =======
     @PostMapping("/login")
@@ -54,37 +59,30 @@ public class AuthController {
 
     @PostMapping("/register")
     @ResponseBody
-    public ResponseEntity<String> register(@RequestBody AuthRequest request) {
-        User user = new User();
-        user.setUsername(request.getUsername());
-        user.setPassword(passwordEncoder.encode(request.getPassword()));
-        userRepository.save(user);
-        return ResponseEntity.ok("User registered successfully");
-    }
+    public ResponseEntity<String> register(@ModelAttribute("user") RegisterRequest request) {
+        System.out.println(">>> Inside createUser method");
+        try {
+            System.out.println("Сохраняем пользователя: " + request);
+            logger.debug("Received request to create user: {}", request);
+            User user = new User();
+            user.setUsername(request.getUsername());
+            user.setEmail(request.getEmail());
+            user.setPassword(passwordEncoder.encode(request.getPassword()));
+            user.setRole(Role.CUSTOMER);
+            System.out.println("Username: " + request.getUsername());
+            System.out.println("Email: " + request.getEmail());
+            System.out.println("Password: " + request.getPassword());
 
-    // ======= HTML Views =======
-    @GetMapping("/login")
-    public String loginPage(@RequestParam(value = "error", required = false) String error,
-                            @RequestParam(value = "logout", required = false) String logout,
-                            Model model) {
-        if (error != null) {
-            model.addAttribute("errorMessage", "Неверный логин или пароль");
+            User savedUser = userRepository.save(user);
+            System.out.println("Saved user ID: " + savedUser.getId());
+
+            return ResponseEntity.ok("User registered successfully");
+        } catch (Exception e) {
+            System.err.println("Ошибка при регистрации: " + e.getMessage());
+            e.printStackTrace(); // 👈 покажет стек вызовов
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Ошибка при регистрации: " + e.getMessage());
         }
-        if (logout != null) {
-            model.addAttribute("logoutMessage", "Вы вышли из системы");
-        }
-        return "login";
-    }
-
-    @PostConstruct
-    public void init() {
-        System.out.println("🔧 AuthController инициализирован!");
-    }
-
-    @GetMapping("/register")
-    public String showRegisterForm(Model model) {
-        model.addAttribute("user", new RegisterRequest());
-        return "register";
     }
 }
 
