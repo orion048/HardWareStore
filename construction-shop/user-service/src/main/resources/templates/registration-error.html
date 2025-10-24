@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Ошибка регистрации</title>
+</head>
+<body>
+<h1>Произошла ошибка при регистрации</h1>
+<p th:text="${errorMessage}">Неизвестная ошибка</p>
+<a href="/register">Попробовать снова</a>
+</body>
+</html>

@@ -1,129 +1,50 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Ваши заказы</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(135deg, #e0f7fa, #e1bee7);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            padding-top: 60px;
-        }
-
-        .container {
-            background-color: #ffffff;
-            padding: 40px;
-            border-radius: 16px;
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
-            max-width: 900px;
-            width: 100%;
-        }
-
-        h2 {
-            color: #4a148c;
-            font-size: 28px;
-            margin-bottom: 10px;
-        }
-
-        h3 {
-            color: #6a1b9a;
-            margin-top: 30px;
-            font-size: 22px;
-        }
-
-        p {
-            color: #555;
-            font-size: 16px;
-            margin: 6px 0;
-        }
-
-        .status {
-            font-weight: bold;
-            color: #2e7d32;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
-        }
-
-        th, td {
-            padding: 14px;
-            border-bottom: 1px solid #ddd;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f3e5f5;
-            color: #4a148c;
-        }
-
-        tr:hover {
-            background-color: #f1f8e9;
-        }
-
-        @media (max-width: 600px) {
-            .container {
-                padding: 20px;
-            }
-
-            table, thead, tbody, th, td, tr {
-                display: block;
-            }
-
-            th {
-                display: none;
-            }
-
-            td {
-                padding: 10px;
-                border: none;
-                position: relative;
-            }
-
-            td::before {
-                content: attr(data-label);
-                font-weight: bold;
-                display: block;
-                margin-bottom: 5px;
-                color: #6a1b9a;
-            }
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Стройматериалы у Миши</title>
+    <link rel="stylesheet" href="/css/home.css" />
 </head>
+
 <body>
-<div class="container">
-    <h2>Здравствуйте, <span th:text="${user.username}">Имя</span>!</h2>
 
-    <p>Email: <span th:text="${user.email}">email@example.com</span></p>
-    <p>Адрес доставки: <span th:text="${user.order.deliveryAddress}">Адрес</span></p>
-    <p>Статус: <span class="status" th:text="${user.order.status}">Статус</span></p>
+<header class="glass-header">
+    <nav class="nav-menu">
+        <a href="/">Главная</a>
+        <a href="/shop/products">Стройматериалы</a>
+        <a href="/shop/cart">Корзина</a>
+    </nav>
 
-    <h3>Список строительных товаров:</h3>
-    <table>
-        <thead>
-        <tr>
-            <th>Название</th>
-            <th>Количество</th>
-            <th>Цена за единицу</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="product : ${user.order.products}">
-            <td th:text="${product.name}" data-label="Название">Товар</td>
-            <td th:text="${product.quantity}" data-label="Количество">0</td>
-            <td th:text="${product.price}" data-label="Цена">0.0</td>
-        </tr>
-        </tbody>
-    </table>
+    <div class="auth-buttons">
+        <a href="/auth/login">Войти</a>
+        <a href="/auth/register">Зарегистрироваться</a>
+    </div>
+</header>
+
+<!-- ✅ Авторизованный пользователь -->
+<div th:if="${#authorization.expression('isAuthenticated()')}">
+    <div th:if="${user != null}">
+        <p>Добро пожаловать, <span th:text="${user.username}">Пользователь</span></p>
+    </div>
+</div>
+
+<!-- ✅ Неавторизованный пользователь -->
+<div th:unless="${#authorization.expression('isAuthenticated()')}">
+    <p>Добро пожаловать, Гость!</p>
+</div>
+
+
+<div class="background-wrapper">
+    <div class="container" id="home">
+        <h1>Добро пожаловать в "Стройматериалы у Миши"!</h1>
+        <p>Мы предлагаем широкий ассортимент строительных материалов...</p>
+        <div class="contact-info">
+            <p><strong>Адрес:</strong> ул. Строителей, д. 10, г. Липецк</p>
+            <p><strong>Телефон:</strong> +7 (4742) 123-456</p>
+            <p><strong>Электронная почта:</strong> info@stroymisha.ru</p>
+        </div>
+    </div>
 </div>
 </body>
 </html>

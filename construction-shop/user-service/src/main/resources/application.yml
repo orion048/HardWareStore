@@ -7,13 +7,15 @@ spring:
     username: postgres
     password: orion
     driver-class-name: org.postgresql.Driver
+  main:
+    debug: true
 
   jpa:
+    hibernate:
+      ddl-auto: create
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
-    hibernate:
-      ddl-auto: update
 
   logging:
     level:
@@ -28,3 +30,6 @@ spring:
     prefix: classpath:/templates/
     suffix: .html
 
+eureka:
+  client:
+    enabled: false

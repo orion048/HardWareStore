@@ -6,11 +6,16 @@ import com.project.dto.UserResponse;
 import com.project.exception.UserNotFoundException;
 import com.project.model.User;
 import com.project.service.UserService;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -40,7 +45,6 @@ public class UserController {
                 .orElseThrow(() -> new UserNotFoundException("Пользователь не найден"));
         return ResponseEntity.ok(new UserResponse(user));
     }
-
 
 
     @DeleteMapping("/{id}")

@@ -13,47 +13,35 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-// security/SecurityConfig.java
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-    @Autowired
-    private CustomUserDetailsService userDetailsService;
-    @Autowired
-    private JwtFilter jwtFilter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
-                .csrf(csrf -> csrf.disable()) // 👈 или включи и добавь CSRF-токен в форму
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/register",
-                                "/auth/login",
-                                "/auth/**",
-                                "/css/**",        // 👈 стили
-                                "/js/**",         // 👈 скрипты
-                                "/images/**",     // 👈 картинки
-                                "/webjars/**" ).permitAll() // 👈 разрешаем доступ
+                        .requestMatchers("/","/auth/home", "/auth/login", "/auth/register", "/css/**", "/js/**", "/images/**").permitAll()
+                        .requestMatchers("/auth/login").permitAll()
                         .anyRequest().authenticated()
                 )
-                .formLogin(form -> form
-                        .loginPage("/auth/login") // 👈 твоя кастомная страница логина
-                        .permitAll()
-                )
+                .formLogin(form -> form.disable()) // ❌ отключаем встроенную форму входа
+                .httpBasic(httpBasic -> httpBasic.disable()) // ❌ отключаем Basic Auth
                 .build();
     }
 
 
-
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+
 }
 

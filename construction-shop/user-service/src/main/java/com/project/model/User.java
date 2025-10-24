@@ -3,6 +3,7 @@ package com.project.model;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "users", schema = "user_service")
@@ -16,6 +17,12 @@ public class User {
         this.email = email;
         this.password = password;
         this.role = role;
+    }
+
+    public User(String username, String email, List<Order> orders) {
+        this.username = username;
+        this.email = email;
+        this.orders = orders;
     }
 
     @Id
@@ -35,6 +42,8 @@ public class User {
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Order> orders;
 
     // Getters и setters
 
@@ -84,5 +93,13 @@ public class User {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 }

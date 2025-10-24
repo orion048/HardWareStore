@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Товары</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <script>
+        async function addToCart(productId) {
+            const quantity = document.getElementById('qty-' + productId).value;
+            const response = await fetch('/shop/add-to-cart', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `productId=${productId}&quantity=${quantity}`
+            });
+            if (response.ok) {
+                alert('Товар добавлен в корзину!');
+                updateCartCount();
+            } else {
+                alert('Ошибка при добавлении.');
+            }
+        }
+
+        async function updateCartCount() {
+            const res = await fetch('/shop/cart-count');
+            const count = await res.text();
+            document.getElementById('cart-count').innerText = count;
+        }
+
+        window.onload = updateCartCount;
+    </script>
+</head>
+<body>
+<h1>Каталог товаров</h1>
+<p>Корзина: <span id="cart-count">0</span> товаров</p>
+
+<div th:each="product : ${products}" class="product-card">
+    <h3 th:text="${product.productName}">Название</h3>
+    <p>Цена: <span th:text="${product.price}">0.00</span> ₽</p>
+    <p>В наличии: <span th:text="${product.quantity}">0</span></p>
+
+    <label>Количество:
+        <input type="number" th:id="'qty-' + ${product.id}" value="1" min="1" th:attr="max=${product.quantity}" />
+    </label>
+    <button th:attr="onclick='addToCart(' + ${product.id} + ')'">Добавить в корзину</button>
+</div>
+
+<a href="/shop/cart">Перейти в корзину</a>
+</body>
+</html>

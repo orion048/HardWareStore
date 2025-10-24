@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Главная</title>
+</head>
+<body>
+<h1>Добро пожаловать!</h1>
+
+<div th:if="${user != null}">
+    <p>Вы вошли как: <span th:text="${user.username}">Пользователь</span></p>
+</div>
+<div th:if="${user == null}">
+    <p>Вы не авторизованы.</p>
+</div>
+</body>
+</html>
