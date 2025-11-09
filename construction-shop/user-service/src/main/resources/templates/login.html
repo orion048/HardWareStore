@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -11,16 +10,11 @@
     <h2>Вход в систему</h2>
 
     <!-- 🔥 Сообщение об ошибке -->
-    <div th:if="${errorMessage}" class="error-message">
-        <p th:text="${errorMessage}"></p>
+    <div th:if="${error}" class="error-message">
+        <p th:text="${error}"></p>
     </div>
 
-    <!-- ✅ Сообщение о выходе -->
-    <div th:if="${logoutMessage}" class="logout-message">
-        <p th:text="${logoutMessage}"></p>
-    </div>
-
-    <form th:action="@{/login}" method="post">
+    <form th:action="@{/auth/login}" method="post">
         <label for="username">Логин:</label>
         <input type="text" id="username" name="username" required />
 

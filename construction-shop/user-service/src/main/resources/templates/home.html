@@ -11,29 +11,37 @@
 
 <header class="glass-header">
     <nav class="nav-menu">
-        <a href="/">Главная</a>
+        <a href="/auth/home">Главная</a>
         <a href="/shop/products">Стройматериалы</a>
         <a href="/shop/cart">Корзина</a>
     </nav>
 
-    <div class="auth-buttons">
-        <a href="/auth/login">Войти</a>
-        <a href="/auth/register">Зарегистрироваться</a>
+    <div class="auth-section">
+        <!-- Приветствие -->
+        <div class="welcome-message" th:if="${user != null}">
+            Добро пожаловать, <span th:text="${user.username}">Пользователь</span>!
+        </div>
+        <div class="welcome-message" th:if="${user == null}">
+            Добро пожаловать, Гость!
+        </div>
+
+        <!-- Кнопки авторизации -->
+        <div class="auth-buttons" th:if="${user != null}">
+            <a href="/auth/profile" class="profile-button">Профиль</a>
+            <form th:action="@{/auth/logout}" method="post" style="display:inline;">
+                <button type="submit" class="logout-button">Выйти</button>
+            </form>
+        </div>
+
+        <!-- 🔐 Кнопки для гостей -->
+        <div class="auth-buttons" th:if="${user == null}">
+            <a href="/auth/login" class="login-button">Войти</a>
+            <a href="/auth/register" class="register-button">Регистрация</a>
+        </div>
     </div>
+
+
 </header>
-
-<!-- ✅ Авторизованный пользователь -->
-<div th:if="${#authorization.expression('isAuthenticated()')}">
-    <div th:if="${user != null}">
-        <p>Добро пожаловать, <span th:text="${user.username}">Пользователь</span></p>
-    </div>
-</div>
-
-<!-- ✅ Неавторизованный пользователь -->
-<div th:unless="${#authorization.expression('isAuthenticated()')}">
-    <p>Добро пожаловать, Гость!</p>
-</div>
-
 
 <div class="background-wrapper">
     <div class="container" id="home">

@@ -11,9 +11,17 @@ h1 {
 .product-card {
     border: 1px solid #ccc;
     padding: 15px;
+    margin: 10px;
+    width: 250px;
+    display: inline-block;
+    vertical-align: top;
+    text-align: center;
+}
+
+.product-image {
+    width: 200px;
+    height: auto;
     margin-bottom: 10px;
-    background-color: #fff;
-    border-radius: 5px;
 }
 
 .product-card form {

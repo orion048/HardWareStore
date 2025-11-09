@@ -12,6 +12,7 @@ public class Product {
     private String productName;
     private int quantity;
     private double price;
+    private String imageUrl;
 
     @ManyToOne
     @JoinColumn(name = "order_id")
@@ -52,5 +53,25 @@ public class Product {
 
     public void setOrder(Order order) {
         this.order = order;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Order getOrder() {
+        return order;
     }
 }

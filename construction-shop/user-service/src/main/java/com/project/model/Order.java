@@ -2,6 +2,7 @@ package com.project.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -14,12 +15,26 @@ public class Order {
     private String deliveryAddress;
     private String status;
 
-    @OneToOne
-    @JoinColumn(name = "user_id")
+    @ManyToOne
+    @JoinColumn(name = "user_id") // без unique = true
     private User user;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<Product> products;
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    private List<OrderItem> items = new ArrayList<>();
+
+    @Transient
+    private double totalAmount;
+
+    public double getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(double totalAmount) {
+        this.totalAmount = totalAmount;
+    }
 
     public Order() {
     }
@@ -28,6 +43,14 @@ public class Order {
         this.deliveryAddress = deliveryAddress;
         this.status = status;
         this.products = products;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getDeliveryAddress() {
@@ -60,5 +83,13 @@ public class Order {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public List<OrderItem> getItems() {
+        return items;
+    }
+
+    public void setItems(List<OrderItem> items) {
+        this.items = items;
     }
 }

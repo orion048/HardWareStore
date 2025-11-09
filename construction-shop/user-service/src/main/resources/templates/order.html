@@ -8,28 +8,46 @@
 <body>
 <div class="container">
     <h2>Здравствуйте, <span th:text="${user.username}">Имя</span>!</h2>
-
     <p>Email: <span th:text="${user.email}">email@example.com</span></p>
-    <p>Адрес доставки: <span th:text="${user.order.deliveryAddress}">Адрес</span></p>
-    <p>Статус: <span class="status" th:text="${user.order.status}">Статус</span></p>
 
-    <h3>Список строительных товаров:</h3>
-    <table>
-        <thead>
-        <tr>
-            <th>Название</th>
-            <th>Количество</th>
-            <th>Цена за единицу</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="product : ${user.order.products}">
-            <td th:text="${product.productName}" data-label="Название">Товар</td>
-            <td th:text="${product.quantity}" data-label="Количество">0</td>
-            <td th:text="${product.price}" data-label="Цена">0.0</td>
-        </tr>
-        </tbody>
-    </table>
+    <div th:if="${#lists.isEmpty(orders)}">
+        <p>У вас пока нет заказов.</p>
+    </div>
+
+    <div th:each="order : ${orders}">
+        <hr/>
+        <p>Адрес доставки: <span th:text="${order.deliveryAddress}">Адрес</span></p>
+        <p>Статус: <span class="status" th:text="${order.status}">Статус</span></p>
+
+        <h3>Список строительных товаров:</h3>
+        <table>
+            <thead>
+            <tr>
+                <th>Название</th>
+                <th>Количество</th>
+                <th>Цена за единицу</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:if="${#lists.isEmpty(order.items)}">
+                <td colspan="3">Нет товаров в заказе</td>
+            </tr>
+            <tr th:each="item : ${order.items}">
+                <td th:text="${item.product.productName}" data-label="Название">Товар</td>
+                <td th:text="${item.quantity}" data-label="Количество">0</td>
+                <td th:text="${item.price}" data-label="Цена">0.0</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <p><strong>Сумма заказа:</strong> <span th:text="${order.totalAmount}">0.00</span> ₽</p>
+
+        <!-- Кнопка оплаты -->
+        <form th:action="@{/payment}" method="get">
+            <input type="hidden" name="orderId" th:value="${order.id}" />
+            <button type="submit" class="pay-button">Оплатить</button>
+        </form>
+    </div>
 </div>
 </body>
 </html>

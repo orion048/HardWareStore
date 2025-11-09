@@ -6,11 +6,10 @@ import com.project.model.Role;
 import com.project.model.User;
 import com.project.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
-import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,15 +19,11 @@ public class UserService {
     @Autowired
     private final UserRepository userRepository;
 
-    private final PasswordEncoder passwordEncoder;
-
-    @Autowired
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
     }
 
-
+    // Регистрация пользователя без шифрования пароля
     public User registerUser(RegisterRequest request) {
         if (userRepository.existsByEmail(request.getEmail()) || userRepository.existsByUsername(request.getUsername())) {
             throw new RuntimeException("Пользователь с таким email или username уже существует");
@@ -37,7 +32,7 @@ public class UserService {
         User user = new User();
         user.setUsername(request.getUsername());
         user.setEmail(request.getEmail());
-        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        user.setPassword(request.getPassword()); // ❌ без шифрования
         user.setRole(Role.CUSTOMER);
 
         return userRepository.save(user);
@@ -71,24 +66,22 @@ public class UserService {
         return userRepository.findByUsername(name);
     }
 
-    public Optional<User> getUserById (Long id){
+    public Optional<User> getUserById(Long id) {
         return userRepository.findById(id);
     }
 
-    public void delete (Long id){
+    public void delete(Long id) {
         userRepository.deleteById(id);
     }
 
-    public List<User> getAll () {
+    public List<User> getAll() {
         return userRepository.findAll();
     }
 
-    public User getUserFromPrincipal(Principal principal) {
-        if (principal == null) return null;
-        String username = principal.getName();
-        return userRepository.findByUsername(username).orElse(null);
+    public User save(User user) {
+        return userRepository.save(user);
     }
 
 
-    // Остальные методы (поиск, проверка и т.д.)
+
 }

@@ -5,5 +5,6 @@ import jakarta.persistence.Table;
 
 public enum Role {
     CUSTOMER,
-    ADMIN
+    ADMIN,
+    GUEST
 }

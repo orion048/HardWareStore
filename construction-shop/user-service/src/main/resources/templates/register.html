@@ -7,7 +7,22 @@
 </head>
 <body>
 <h2>Регистрация</h2>
+
+<!-- 🔴 Сообщение об ошибке -->
+<div th:if="${errorMessage}" style="color:red;">
+    <p th:text="${errorMessage}"></p>
+</div>
+
 <form th:action="@{/auth/register}" th:object="${user}" method="post">
+
+    <label>Фамилия:</label>
+    <input type="text" th:field="*{lastName}" required/><br/>
+
+    <label>Имя:</label>
+    <input type="text" th:field="*{firstName}" required/><br/>
+
+    <label>Отчество:</label>
+    <input type="text" th:field="*{middleName}" /><br/>
 
     <label>Имя пользователя:</label>
     <input type="text" th:field="*{username}" required/><br/>
@@ -20,5 +35,6 @@
 
     <button type="submit">Зарегистрироваться</button>
 </form>
+
 </body>
 </html>
