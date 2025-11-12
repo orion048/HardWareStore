@@ -10,4 +10,4 @@ spring:
         git:
           uri: https://github.com/orion048/HardWareStore.git
           # путь внутри репозитория, где лежат конфиги
-          search-paths: config-service/src/main/resources/config-files
+          search-paths: config-files
