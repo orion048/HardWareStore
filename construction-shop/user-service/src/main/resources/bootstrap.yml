@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: user-service   # совпадает с user-service.yml в config-service
+
+  cloud:
+    config:
+      uri: http://localhost:8888
+      fail-fast: true
+      retry:
+        max-attempts: 5
+        initial-interval: 2000
+        multiplier: 1.5
+        max-interval: 10000

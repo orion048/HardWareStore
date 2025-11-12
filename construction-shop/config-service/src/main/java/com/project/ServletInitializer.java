@@ -1,4 +1,4 @@
-package com.project.config_service;
+package com.project;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
