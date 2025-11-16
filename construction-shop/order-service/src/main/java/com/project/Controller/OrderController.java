@@ -1,6 +1,6 @@
 package com.project.Controller;
 
-import com.project.Entity.Order;
+import com.project.Model.Order;
 import com.project.Repository.OrderRepository;
 import org.springframework.web.bind.annotation.*;
 
