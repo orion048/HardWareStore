@@ -5,9 +5,9 @@ spring:
   application:
     name: cart-service
   datasource:
-    url: jdbc:postgresql://localhost:5432/cart_db
+    url: jdbc:postgresql://localhost:5432/hardwarestore?currentSchema=cart_service
     username: postgres
-    password: postgres
+    password: orion
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
