@@ -1,38 +1,32 @@
+package com.project.Controller;
+
+import com.project.Model.Delivery;
+import com.project.Service.DeliveryService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
 @RestController
-@RequestMapping("/api/deliveries")
+@RequestMapping("/deliveries")
 public class DeliveryController {
 
-    private final DeliveryService service;
+    private final DeliveryService deliveryService;
 
-    public DeliveryController(DeliveryService service) {
-        this.service = service;
+    public DeliveryController(DeliveryService deliveryService) {
+        this.deliveryService = deliveryService;
     }
 
     @PostMapping
-    public ResponseEntity<Delivery> create(@RequestBody Delivery delivery) {
-        return ResponseEntity.ok(service.createDelivery(delivery));
+    public ResponseEntity<Delivery> startDelivery(@RequestParam Long orderId) {
+        return ResponseEntity.ok(deliveryService.startDelivery(orderId));
     }
 
-    @GetMapping
-    public ResponseEntity<List<Delivery>> getAll() {
-        return ResponseEntity.ok(service.getAllDeliveries());
+    @PutMapping("/{id}/complete")
+    public ResponseEntity<Delivery> completeDelivery(@PathVariable Long id) {
+        return ResponseEntity.ok(deliveryService.completeDelivery(id));
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Delivery> getById(@PathVariable Long id) {
-        return service.getById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
-
-    @PutMapping("/{id}/status")
-    public ResponseEntity<Delivery> updateStatus(@PathVariable Long id, @RequestBody String status) {
-        return ResponseEntity.ok(service.updateStatus(id, status));
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        service.deleteDelivery(id);
-        return ResponseEntity.noContent().build();
+    @GetMapping("/health")
+    public ResponseEntity<String> health() {
+        return ResponseEntity.ok("Delivery service is running");
     }
 }

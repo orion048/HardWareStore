@@ -1,7 +1,6 @@
 package com.project.controller;
 
 import com.project.dto.RegisterRequest;
-import com.project.model.Order;
 import com.project.model.Product;
 import com.project.model.Role;
 import com.project.model.User;
@@ -9,7 +8,6 @@ import com.project.repository.OrderRepository;
 import com.project.repository.UserRepository;
 import com.project.service.UserService;
 import jakarta.servlet.http.HttpSession;
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

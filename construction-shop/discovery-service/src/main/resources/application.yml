@@ -1,5 +1,5 @@
 server:
-  port: 8761
+  port: 8761   # стандартный порт для Eureka
 
 spring:
   application:
@@ -7,5 +7,5 @@ spring:
 
 eureka:
   client:
-    register-with-eureka: false
+    register-with-eureka: false   # сам сервер не регистрируется
     fetch-registry: false

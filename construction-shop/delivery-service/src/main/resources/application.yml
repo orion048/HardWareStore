@@ -1,13 +1,28 @@
 server:
-  port: 8083
+  port: 8087
 
 spring:
-  datasource:
-    url: jdbc:postgresql://postgres:5432/deliverydb
-    username: user
-    password: password
+  application:
+    name: delivery-service
 
+  datasource:
+    url: jdbc:postgresql://localhost:5432/delivery_db
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
+
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: delivery-service
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/

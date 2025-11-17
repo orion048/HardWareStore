@@ -1,6 +1,5 @@
 package com.project.repository;
 
-import com.project.model.Order;
 import com.project.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 

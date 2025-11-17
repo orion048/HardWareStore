@@ -1,33 +1,34 @@
+package com.project.Service;
+
+import com.project.Event.PaymentEventProducer;
+import com.project.Model.Payment;
+import com.project.Reposintory.PaymentRepository;
+import org.springframework.stereotype.Service;
+
 @Service
 public class PaymentService {
 
-    private final PaymentRepository repository;
+    private final PaymentRepository paymentRepository;
+    private final PaymentEventProducer eventProducer;
 
-    public PaymentService(PaymentRepository repository) {
-        this.repository = repository;
+    public PaymentService(PaymentRepository paymentRepository,
+                          PaymentEventProducer eventProducer) {
+        this.paymentRepository = paymentRepository;
+        this.eventProducer = eventProducer;
     }
 
-    public Payment createPayment(Payment payment) {
-        payment.setStatus("PENDING");
-        payment.setPaidAt(LocalDateTime.now());
-        return repository.save(payment);
-    }
+    public Payment processPayment(Long orderId, double amount) {
+        Payment payment = new Payment(orderId, amount, "SUCCESS");
+        Payment saved = paymentRepository.save(payment);
 
-    public List<Payment> getAll() {
-        return repository.findAll();
-    }
+        // Формируем JSON события
+        String eventPayload = "{ \"orderId\": " + saved.getOrderId() +
+                ", \"paymentId\": " + saved.getId() +
+                ", \"status\": \"" + saved.getStatus() + "\" }";
 
-    public Optional<Payment> getById(Long id) {
-        return repository.findById(id);
-    }
+        // Отправляем событие в Kafka
+        eventProducer.sendOrderPaidEvent(eventPayload);
 
-    public void delete(Long id) {
-        repository.deleteById(id);
-    }
-
-    public Payment updateStatus(Long id, String newStatus) {
-        Payment payment = repository.findById(id).orElseThrow();
-        payment.setStatus(newStatus);
-        return repository.save(payment);
+        return saved;
     }
 }
