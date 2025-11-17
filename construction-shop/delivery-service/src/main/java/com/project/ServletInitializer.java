@@ -1,5 +1,6 @@
-package com.project.delivery_service;
+package com.project;
 
+import com.project.DeliveryServiceApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
