@@ -1,11 +1,5 @@
-server:
-  port: 8761   # стандартный порт для Eureka
-
 spring:
   application:
     name: discovery-service
-
-eureka:
-  client:
-    register-with-eureka: false   # сам сервер не регистрируется
-    fetch-registry: false
+  config:
+    import: optional:configserver:http://localhost:8888

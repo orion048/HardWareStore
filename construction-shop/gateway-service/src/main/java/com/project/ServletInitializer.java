@@ -1,5 +1,6 @@
-package com.project.gateway_service;
+package com.project;
 
+import com.project.GatewayServiceApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
