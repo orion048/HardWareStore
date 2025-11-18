@@ -53,3 +53,9 @@ logging:
   level:
     root: INFO
     org.springframework: DEBUG
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

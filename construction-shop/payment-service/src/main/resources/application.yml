@@ -1,25 +1,18 @@
-server:
-  port: 8086
-
 spring:
   application:
     name: payment-service
 
-  datasource:
-    url: jdbc:postgresql://localhost:5432/payment_db
-    username: postgres
-    password: postgres
-    driver-class-name: org.postgresql.Driver
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
+  config:
+    import: "configserver:http://localhost:8888"
 
-  kafka:
-    bootstrap-servers: localhost:9092
-    producer:
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+  cloud:
+    config:
+      fail-fast: true
+      retry:
+        max-attempts: 5
+        initial-interval: 2000
+        multiplier: 1.5
+        max-interval: 10000
 
 eureka:
   client:
