@@ -1,5 +1,6 @@
-package com.project.saga_coordinator;
+package com.project;
 
+import com.project.SagaCoordinatorApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
