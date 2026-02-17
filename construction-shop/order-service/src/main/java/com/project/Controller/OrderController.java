@@ -1,33 +1,28 @@
+package com.project.Controller;
+
+import com.project.Model.Order;
+import com.project.Repository.OrderRepository;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
 @RestController
-@RequestMapping("/api/orders")
+@RequestMapping("/orders")
 public class OrderController {
 
-    private final OrderService service;
+    private final OrderRepository repository;
 
-    public OrderController(OrderService service) {
-        this.service = service;
-    }
-
-    @PostMapping
-    public ResponseEntity<Order> create(@RequestBody Order order) {
-        return ResponseEntity.ok(service.createOrder(order));
+    public OrderController(OrderRepository repository) {
+        this.repository = repository;
     }
 
     @GetMapping
-    public ResponseEntity<List<Order>> getAll() {
-        return ResponseEntity.ok(service.getAllOrders());
+    public List<Order> getAll() {
+        return repository.findAll();
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Order> getById(@PathVariable Long id) {
-        return service.getOrderById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        service.deleteOrder(id);
-        return ResponseEntity.noContent().build();
+    @PostMapping
+    public Order create(@RequestBody Order order) {
+        return repository.save(order);
     }
 }

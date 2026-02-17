@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Стройматериалы у Миши</title>
+    <link rel="stylesheet" href="/css/home.css" />
+</head>
+
+<body>
+
+<header class="glass-header">
+    <nav class="nav-menu">
+        <a href="/auth/home">Главная</a>
+        <a href="/shop/products">Стройматериалы</a>
+        <a href="/shop/cart">Корзина</a>
+    </nav>
+
+    <div class="auth-section">
+        <!-- Приветствие -->
+        <div class="welcome-message" th:if="${user != null}">
+            Добро пожаловать, <span th:text="${user.username}">Пользователь</span>!
+        </div>
+        <div class="welcome-message" th:if="${user == null}">
+            Добро пожаловать, Гость!
+        </div>
+
+        <!-- Кнопки авторизации -->
+        <div class="auth-buttons" th:if="${user != null}">
+            <a href="/auth/profile" class="profile-button">Профиль</a>
+            <form th:action="@{/auth/logout}" method="post" style="display:inline;">
+                <button type="submit" class="logout-button">Выйти</button>
+            </form>
+        </div>
+
+        <!-- 🔐 Кнопки для гостей -->
+        <div class="auth-buttons" th:if="${user == null}">
+            <a href="/auth/login" class="login-button">Войти</a>
+            <a href="/auth/register" class="register-button">Регистрация</a>
+        </div>
+    </div>
+
+
+</header>
+
+<div class="background-wrapper">
+    <div class="container" id="home">
+        <h1>Добро пожаловать в "Стройматериалы у Миши"!</h1>
+        <p>Мы предлагаем широкий ассортимент строительных материалов...</p>
+        <div class="contact-info">
+            <p><strong>Адрес:</strong> ул. Строителей, д. 10, г. Липецк</p>
+            <p><strong>Телефон:</strong> +7 (4742) 123-456</p>
+            <p><strong>Электронная почта:</strong> info@stroymisha.ru</p>
+        </div>
+    </div>
+</div>
+</body>
+</html>

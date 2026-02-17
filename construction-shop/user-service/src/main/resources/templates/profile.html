@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Профиль пользователя</title>
+    <link rel="stylesheet" href="/css/order.css" />
+</head>
+<body>
+<div class="container">
+
+    <div th:if="${user != null}">
+        <h2>Здравствуйте, <span th:text="${user.firstName + ' ' + user.lastName}">ФИО</span>!</h2>
+        <p>Email: <span th:text="${user.email}">email@example.com</span></p>
+
+        <a href="/auth/home" class="home-button">Перейти на главную</a>
+
+        <!-- 📦 Заказы -->
+        <div th:if="${#lists.isEmpty(user.orders)}">
+            <p>У вас пока нет заказов.</p>
+        </div>
+
+        <div th:each="order : ${orders}">
+            <hr/>
+            <p><strong>Адрес доставки:</strong> <span th:text="${order.deliveryAddress}">Адрес</span></p>
+            <p><strong>Статус:</strong> <span class="status" th:text="${order.status}">Статус</span></p>
+
+            <h3>Список товаров:</h3>
+            <table>
+                <thead>
+                <tr>
+                    <th>Название</th>
+                    <th>Количество</th>
+                    <th>Цена</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${#lists.isEmpty(order.items)}">
+                    <td colspan="3">Нет товаров в заказе</td>
+                </tr>
+                <tr th:each="item : ${order.items}">
+                    <td th:text="${item.product.productName}">Товар</td>
+                    <td th:text="${item.quantity}">0</td>
+                    <td th:text="${item.price}">0.0</td>
+                </tr>
+                </tbody>
+            </table>
+
+            <!-- 💰 Сумма заказа -->
+            <p><strong>Сумма заказа:</strong> <span th:text="${order.totalAmount}">0.00</span> ₽</p>
+            <!-- 🔘 Кнопка оплаты -->
+            <form th:action="@{/auth/payment}" method="get">
+                <input type="hidden" name="orderId" th:value="${order.id}" />
+                <button type="submit" class="pay-button">Оплатить</button>
+            </form>
+
+        </div>
+
+
+        <!-- ✏️ Кнопка и форма редактирования ФИО -->
+        <hr/>
+        <button onclick="toggleFioForm()" class="edit-fio-button">Редактировать ФИО</button>
+
+        <div id="edit-fio-form" style="display:none;">
+            <form th:action="@{/auth/update-fio}" th:object="${user}" method="post" class="fio-form">
+                <div class="form-group">
+                    <label for="lastName">Фамилия:</label>
+                    <input type="text" th:field="*{lastName}" id="lastName" required/>
+                </div>
+
+                <div class="form-group">
+                    <label for="firstName">Имя:</label>
+                    <input type="text" th:field="*{firstName}" id="firstName" required/>
+                </div>
+
+                <div class="form-group">
+                    <label for="middleName">Отчество:</label>
+                    <input type="text" th:field="*{middleName}" id="middleName"/>
+                </div>
+
+                <button type="submit" class="save-button">Сохранить</button>
+            </form>
+
+            <div th:if="${errorMessage}" class="error-message">
+                <p th:text="${errorMessage}"></p>
+            </div>
+        </div>
+    </div>
+
+    <div th:if="${user == null}">
+        <h2>Ошибка: пользователь не авторизован</h2>
+        <p>Пожалуйста, <a href="/auth/login">войдите</a> в систему.</p>
+    </div>
+
+</div>
+
+<script>
+    function toggleFioForm() {
+        const form = document.getElementById("edit-fio-form");
+        form.style.display = form.style.display === "none" ? "block" : "none";
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Каталог товаров</title>
+    <link rel="stylesheet" th:href="@{/css/products.css}" />
+    <script>
+        async function addToCart(productId) {
+            const quantity = document.getElementById('qty-' + productId).value;
+            const response = await fetch('/shop/add-to-cart', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `productId=${productId}&quantity=${quantity}`
+            });
+            if (response.ok) {
+                alert('Товар добавлен в корзину!');
+                updateCartCount();
+            } else {
+                alert('Ошибка при добавлении.');
+            }
+        }
+
+        async function updateCartCount() {
+            const res = await fetch('/shop/cart-count');
+            const count = await res.text();
+            document.getElementById('cart-count').innerText = count;
+        }
+
+        window.onload = updateCartCount;
+    </script>
+</head>
+<body>
+<header>
+    <h1>Каталог товаров</h1>
+    <nav class="top-nav">
+        <a href="/auth/home" class="nav-button">🏠 Главная</a>
+        <a href="/auth/profile" class="nav-button">👤 Профиль</a>
+        <a href="/shop/cart" class="nav-button">🛒 Корзина: <span id="cart-count">0</span></a>
+    </nav>
+</header>
+
+<div class="product-grid">
+    <div th:each="product : ${products}" class="product-card">
+        <img th:src="@{${product.imageUrl}}" alt="Фото товара" class="product-image" />
+
+        <h3 th:text="${product.productName}">Название</h3>
+        <p>Цена: <span th:text="${product.price}">0.00</span> ₽</p>
+        <p>В наличии: <span th:text="${product.quantity}">0</span></p>
+
+        <label>Количество:
+            <input type="number" th:id="|qty-${product.id}|" value="1" min="1" th:attr="max=${product.quantity}" />
+        </label>
+        <button th:attr="onclick=|addToCart(${product.id})|">Добавить в корзину</button>
+    </div>
+</div>
+</body>
+</html>

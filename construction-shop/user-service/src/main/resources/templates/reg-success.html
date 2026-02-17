@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Регистрация успешна</title>
+    <link rel="stylesheet" th:href="@{/css/styleReg-success.css}" />
+</head>
+<body>
+<div class="container">
+    <h1>🎉 Регистрация прошла успешно!</h1>
+    <p>Добро пожаловать, <strong th:text="${username}">пользователь</strong>!</p>
+    <a href="/auth/profile" class="btn">Профиль пользователя</a>
+    <a href="/shop/products" class="btn">Перейти к покупкам</a>
+</div>
+</body>
+</html>

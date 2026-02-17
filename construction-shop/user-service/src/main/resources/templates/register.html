@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+<<<<<<< HEAD
     <title>Регистрация</title>
 </head>
 <body>
@@ -18,5 +19,41 @@
 
     <button type="submit">Зарегистрироваться</button>
 </form>
+=======
+    <link rel="stylesheet" th:href="@{/css/styleRegister.css}" />
+    <title>Регистрация</title>
+</head>
+<body>
+<h2>Регистрация</h2>
+
+<!-- 🔴 Сообщение об ошибке -->
+<div th:if="${errorMessage}" style="color:red;">
+    <p th:text="${errorMessage}"></p>
+</div>
+
+<form th:action="@{/auth/register}" th:object="${user}" method="post">
+
+    <label>Фамилия:</label>
+    <input type="text" th:field="*{lastName}" required/><br/>
+
+    <label>Имя:</label>
+    <input type="text" th:field="*{firstName}" required/><br/>
+
+    <label>Отчество:</label>
+    <input type="text" th:field="*{middleName}" /><br/>
+
+    <label>Имя пользователя:</label>
+    <input type="text" th:field="*{username}" required/><br/>
+
+    <label>Email:</label>
+    <input type="email" th:field="*{email}" required/><br/>
+
+    <label>Пароль:</label>
+    <input type="password" th:field="*{password}" required/><br/>
+
+    <button type="submit">Зарегистрироваться</button>
+</form>
+
+>>>>>>> d6a43440dc21285200505b4fd73a5dcdb146be92
 </body>
 </html>

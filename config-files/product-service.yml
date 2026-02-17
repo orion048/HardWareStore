@@ -1,0 +1,24 @@
+server:
+  port: 8082   # порт для product-service
+
+spring:
+  application:
+    name: product-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/hardwarestore?currentSchema=product_service
+    username: postgres
+    password: orion
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update   # для разработки удобно update, в проде лучше validate
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+# Если используешь Eureka Discovery
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/

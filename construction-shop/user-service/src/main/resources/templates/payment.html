@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Оплата заказа</title>
+    <link rel="stylesheet" href="/css/payment.css" />
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const cardInput = document.querySelector('input[name="cardNumber"]');
+            const expiryInput = document.querySelector('input[name="expiryDate"]');
+
+            cardInput.addEventListener("input", function () {
+                let value = this.value.replace(/\D/g, "").substring(0, 16);
+                let formatted = value.match(/.{1,4}/g)?.join(" ") || "";
+                this.value = formatted;
+            });
+
+            expiryInput.addEventListener("input", function () {
+                let value = this.value.replace(/\D/g, "").substring(0, 4);
+                if (value.length >= 3) {
+                    this.value = value.substring(0, 2) + "/" + value.substring(2);
+                } else {
+                    this.value = value;
+                }
+            });
+        });
+    </script>
+
+</head>
+<body>
+<div class="container">
+    <h2>Оплата заказа №<span th:text="${order.id}">ID</span></h2>
+    <p>Сумма к оплате: <strong><span th:text="${order.totalAmount}">0.00</span> ₽</strong></p>
+
+    <form th:action="@{/auth/payment/submit}" method="post">
+        <input type="hidden" name="orderId" th:value="${order.id}" />
+
+        <div class="form-group">
+            <label>Номер карты:</label>
+            <input type="text" name="cardNumber" maxlength="19" placeholder="1234 5678 9012 3456" required/>
+        </div>
+
+        <div class="form-group">
+            <label>Срок действия:</label>
+            <input type="text" name="expiryDate" maxlength="5" placeholder="MM/YY" required/>
+        </div>
+
+        <div class="form-group">
+            <label>CVV:</label>
+            <input type="password" name="cvv" maxlength="3" required/>
+        </div>
+
+        <div class="form-group">
+            <label>
+                <input type="checkbox" name="saveCard"/> Сохранить карту для будущих покупок
+            </label>
+        </div>
+
+        <button type="submit">Оплатить</button>
+    </form>
+</div>
+</body>
+</html>

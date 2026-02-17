@@ -1,38 +1,28 @@
+package com.project.Controller;
+
+import com.project.Model.Payment;
+import com.project.Service.PaymentService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
 @RestController
-@RequestMapping("/api/payments")
+@RequestMapping("/payments")
 public class PaymentController {
 
-    private final PaymentService service;
+    private final PaymentService paymentService;
 
-    public PaymentController(PaymentService service) {
-        this.service = service;
+    public PaymentController(PaymentService paymentService) {
+        this.paymentService = paymentService;
     }
 
     @PostMapping
-    public ResponseEntity<Payment> create(@RequestBody Payment payment) {
-        return ResponseEntity.ok(service.createPayment(payment));
+    public ResponseEntity<Payment> processPayment(@RequestParam Long orderId,
+                                                  @RequestParam double amount) {
+        return ResponseEntity.ok(paymentService.processPayment(orderId, amount));
     }
 
-    @GetMapping
-    public ResponseEntity<List<Payment>> getAll() {
-        return ResponseEntity.ok(service.getAll());
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<Payment> getById(@PathVariable Long id) {
-        return service.getById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
-
-    @PutMapping("/{id}/status")
-    public ResponseEntity<Payment> updateStatus(@PathVariable Long id, @RequestBody String status) {
-        return ResponseEntity.ok(service.updateStatus(id, status));
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        service.delete(id);
-        return ResponseEntity.noContent().build();
+    @GetMapping("/health")
+    public ResponseEntity<String> health() {
+        return ResponseEntity.ok("Payment service is running");
     }
 }

@@ -1,0 +1,41 @@
+server:
+  port: 8084
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/hardwarestore?currentSchema=user_service
+    username: postgres
+    password: orion
+    driver-class-name: org.postgresql.Driver
+  main:
+    debug: true
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+    sql:
+      init:
+        mode: never  # отключает автоматический запуск schema.sql и data.sql
+
+  logging:
+    level:
+      org.hibernate.SQL: DEBUG
+      org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+      com.project.controller: DEBUG
+      com.project.repository: DEBUG
+      org.springframework: INFO
+
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Корзина</title>
+    <link rel="stylesheet" href="/css/cart.css">
+</head>
+<body>
+<div class="container">
+    <h1>Ваша корзина</h1>
+
+    <div th:if="${#lists.isEmpty(cartItems)}">
+        <p>Корзина пуста.</p>
+        <a href="/shop/products">Перейти к покупкам</a>
+    </div>
+
+    <div th:if="${!cartItems.isEmpty()}">
+        <table>
+            <thead>
+            <tr>
+                <th>Товар</th>
+                <th>Цена</th>
+                <th>Количество</th>
+                <th>Сумма</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item : ${cartItems}">
+                <td th:text="${item.product.productName}">Название</td>
+                <td th:text="${item.product.price}">0.00</td>
+                <td th:text="${item.quantity}">1</td>
+                <td th:text="${item.product.price * item.quantity}">0.00</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <!-- 🔒 Проверка авторизации -->
+        <div th:if="${user == null}">
+            <p>Чтобы оформить заказ, пожалуйста <a href="/auth/login">войдите в систему</a>.</p>
+        </div>
+
+        <!-- ✅ Форма оформления заказа -->
+        <div th:if="${user != null}">
+            <form th:action="@{/shop/checkout}" method="post" class="checkout-form">
+                <label for="address">Адрес доставки:</label><br/>
+                <input type="text" id="address" name="deliveryAddress" placeholder="Введите адрес" required/><br/><br/>
+
+                <button type="submit">Оформить заказ</button>
+            </form>
+
+            <a href="/auth/profile" class="profile-link">Перейти в профиль</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
