@@ -4,10 +4,12 @@ server:
 spring:
   application:
     name: config-service
+
   cloud:
     config:
       server:
         git:
           uri: https://github.com/orion048/HardWareStore.git
-          # путь внутри репозитория, где лежат конфиги
           search-paths: config-files
+        vault:
+          enabled: false
