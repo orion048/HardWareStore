@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - include:
+      file: db/migration/changesets/01-create-categories.yaml
+  - include:
+      file: db/migration/changesets/02-create-products.yaml
+  - include:
+      file: db/migration/changesets/03-seed-categories.yaml

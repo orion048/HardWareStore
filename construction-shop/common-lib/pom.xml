@@ -9,24 +9,35 @@
     <version>1.0.0</version>
     <packaging>jar</packaging>
 
+    <properties>
+        <java.version>17</java.version>
+        <jackson.version>2.17.0</jackson.version>
+        <lombok.version>1.18.30</lombok.version>
+        <jakarta.validation.version>3.0.2</jakarta.validation.version>
+    </properties>
+
     <dependencies>
-        <!-- Jackson для DTO и событий -->
+        <!-- Jackson -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
         </dependency>
 
-        <!-- Lombok (по желанию) -->
+        <!-- Lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
             <scope>provided</scope>
         </dependency>
 
-        <!-- Валидация -->
+        <!-- Jakarta Validation -->
         <dependency>
             <groupId>jakarta.validation</groupId>
             <artifactId>jakarta.validation-api</artifactId>
+            <version>${jakarta.validation.version}</version>
         </dependency>
     </dependencies>
+
 </project>

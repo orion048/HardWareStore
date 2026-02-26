@@ -1,0 +1,32 @@
+databaseChangeLog:
+  - changeSet:
+      id: seed-categories
+      author: armen
+      changes:
+        - insert:
+            tableName: categories
+            columns:
+              - column:
+                  name: name
+                  value: "Инструменты"
+              - column:
+                  name: description
+                  value: "Ручной и электроинструмент"
+        - insert:
+            tableName: categories
+            columns:
+              - column:
+                  name: name
+                  value: "Стройматериалы"
+              - column:
+                  name: description
+                  value: "Материалы для строительства"
+        - insert:
+            tableName: categories
+            columns:
+              - column:
+                  name: name
+                  value: "Отделка"
+              - column:
+                  name: description
+                  value: "Отделочные материалы"
