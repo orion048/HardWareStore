@@ -1,24 +1,37 @@
 server:
-  port: 8082   # порт для product-service
+  port: 8082
 
 spring:
   application:
     name: product-service
+
   datasource:
     url: jdbc:postgresql://localhost:5432/hardwarestore?currentSchema=product_service
     username: postgres
     password: orion
     driver-class-name: org.postgresql.Driver
+
   jpa:
     hibernate:
-      ddl-auto: update   # для разработки удобно update, в проде лучше validate
+      ddl-auto: validate     # обязательно validate при Liquibase
     show-sql: true
     properties:
       hibernate:
         format_sql: true
 
-# Если используешь Eureka Discovery
+  liquibase:
+    enabled: true
+    change-log: classpath:db/migration/changelog-master.yaml
+
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+
+logging:
+  level:
+    root: INFO
+    org.springframework.web: DEBUG
+    org.hibernate.SQL: DEBUG
