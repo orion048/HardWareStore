@@ -11,5 +11,6 @@ spring:
         git:
           uri: https://github.com/orion048/HardWareStore.git
           search-paths: config-files
+          default-label: main
         vault:
           enabled: false
