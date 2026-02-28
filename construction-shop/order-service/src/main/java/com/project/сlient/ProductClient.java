@@ -1,13 +1,14 @@
-package com.project.Client;
+package com.project.сlient;
 
-import com.project.DTO.ProductDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-// Клиент для product-service
+import java.math.BigDecimal;
+
 @FeignClient(name = "product-service")
 public interface ProductClient {
-    @GetMapping("/products/{id}")
-    ProductDto getProductById(@PathVariable("id") Long id);
+
+    @GetMapping("/internal/products/{id}/price")
+    BigDecimal getProductPrice(@PathVariable Long id);
 }

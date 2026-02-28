@@ -1,0 +1,5 @@
+databaseChangeLog:
+  - include:
+      file: db/migration/changesets/01-create-orders.yaml
+  - include:
+      file: db/migration/changesets/02-create-order-items.yaml
