@@ -22,6 +22,9 @@ databaseChangeLog:
               - column:
                   name: quantity
                   type: INT
+              - column:
+                  name: price
+                  type: NUMERIC(10,2)
 
         - addForeignKeyConstraint:
             baseTableName: order_items
