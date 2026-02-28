@@ -4,14 +4,29 @@ server:
 spring:
   application:
     name: order-service
+
+  config:
+    import: optional:configserver:http://localhost:8888
+
+  cloud:
+    config:
+      label: main
+      fail-fast: false
+      retry:
+        max-attempts: 5
+        initial-interval: 2000
+        multiplier: 1.5
+        max-interval: 10000
+
   datasource:
     url: jdbc:postgresql://localhost:5432/hardwarestore?currentSchema=order_service
     username: postgres
     password: orion
     driver-class-name: org.postgresql.Driver
+
   jpa:
     hibernate:
-      ddl-auto: validate     # обязательно validate при Liquibase
+      ddl-auto: validate
     show-sql: true
     properties:
       hibernate:
