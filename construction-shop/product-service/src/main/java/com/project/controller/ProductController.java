@@ -1,4 +1,4 @@
-package com.project.сontroller;
+package com.project.controller;
 
 import com.project.dto.CreateProductRequest;
 import com.project.dto.ProductDto;
