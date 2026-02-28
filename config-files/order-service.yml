@@ -11,11 +11,15 @@ spring:
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate     # обязательно validate при Liquibase
     show-sql: true
     properties:
       hibernate:
         format_sql: true
+
+  liquibase:
+    enabled: true
+    change-log: classpath:db/migration/changelog-master.yaml
 
   kafka:
     bootstrap-servers: localhost:9092
