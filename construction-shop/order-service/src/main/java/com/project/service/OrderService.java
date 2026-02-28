@@ -5,7 +5,7 @@ import com.hardwarestore.common.order.OrderStatus;
 import com.project.model.OrderEntity;
 import com.project.model.OrderItemEntity;
 import com.project.repository.OrderRepository;
-import com.project.сlient.ProductClient;
+import com.project.client.ProductClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
