@@ -29,8 +29,8 @@ public class OrderService {
 
         for (OrderItemRequest itemReq : request.getItems()) {
 
-            //BigDecimal price = productClient.getProductPrice(itemReq.getProductId());
-            BigDecimal price = itemReq.getPrice(); // временно
+            BigDecimal price = productClient.getProductPrice(itemReq.getProductId());
+            //BigDecimal price = itemReq.getPrice(); // временно
 
             OrderItemEntity item = new OrderItemEntity();
             item.setProductId(itemReq.getProductId());
