@@ -3,16 +3,23 @@ spring:
     name: order-service
 
   config:
-    import: "optional:configserver:http://localhost:8888"
+    import: optional:configserver:http://localhost:8888
 
   cloud:
     config:
-      fail-fast: true
+      label: main
+      fail-fast: false
       retry:
         max-attempts: 5
         initial-interval: 2000
         multiplier: 1.5
         max-interval: 10000
+
+#  datasource:
+#    url: jdbc:postgresql://localhost:5432/hardwarestore?currentSchema=order_service
+#    username: postgres
+#    password: orion
+#    driver-class-name: org.postgresql.Driver
 
 eureka:
   client:
