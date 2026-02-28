@@ -2,6 +2,8 @@ package com.hardwarestore.common.dto.order;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
+import java.math.BigDecimal;
+
 public class OrderItemRequest {
 
     @NotNull
@@ -9,6 +11,17 @@ public class OrderItemRequest {
 
     @Min(1)
     private int quantity;
+
+    @NotNull private BigDecimal price;
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
 
     public Long getProductId() {
         return productId;
