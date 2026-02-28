@@ -1,28 +1,34 @@
-databaseChangeLog:
-  - changeSet:
-      id: create-order-items
-      author: armen
-      changes:
-        - createTable:
-            tableName: order_items
-            columns:
-              - column:
-                  name: id
-                  type: BIGSERIAL
-                  autoIncrement: true
-                  constraints:
-                    primaryKey: true
-              - column:
-                  name: order_id
-                  type: BIGINT
-              - column:
-                  name: product_id
-                  type: BIGINT
-              - column:
-                  name: quantity
-                  type: INT
-        - addForeignKeyConstraint:
-            baseTableName: order_items
-            baseColumnNames: order_id
-            referencedTableName: orders
-            referencedColumnNames: id
+- changeSet:
+    id: create-order-items
+    author: armen
+    changes:
+      - createTable:
+          tableName: order_items
+          columns:
+            - column:
+                name: id
+                type: BIGSERIAL
+                autoIncrement: true
+                constraints:
+                  primaryKey: true
+            - column:
+                name: order_id
+                type: BIGINT
+            - column:
+                name: product_id
+                type: BIGINT
+            - column:
+                name: quantity
+                type: INT
+      - addForeignKeyConstraint:
+          baseTableName: order_items
+          baseColumnNames: order_id
+          referencedTableName: orders
+          referencedColumnNames: id
+          constraintName: fk_order_items_orders
+      - addForeignKeyConstraint:
+          baseTableName: order_items
+          baseColumnNames: product_id
+          referencedTableName: products
+          referencedColumnNames: id
+          constraintName: fk_order_items_products
