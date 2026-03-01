@@ -1,5 +1,6 @@
 package com.project.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,5 +24,7 @@ public class CategoryEntity {
     private String description;
 
     @OneToMany(mappedBy = "category")
+    @JsonIgnore
     private List<ProductEntity> products = new ArrayList<>();
+
 }
