@@ -8,6 +8,10 @@ C:\Users\PC\Desktop\HardWareStore\hardware store\construction-shop\common-lib\sr
 C:\Users\PC\Desktop\HardWareStore\hardware store\construction-shop\common-lib\src\main\java\com\hardwarestore\common\dto\order\OrderResponse.java
 C:\Users\PC\Desktop\HardWareStore\hardware store\construction-shop\common-lib\src\main\java\com\hardwarestore\common\dto\payment\PaymentRequest.java
 C:\Users\PC\Desktop\HardWareStore\hardware store\construction-shop\common-lib\src\main\java\com\hardwarestore\common\dto\payment\PaymentResponse.java
+C:\Users\PC\Desktop\HardWareStore\hardware store\construction-shop\common-lib\src\main\java\com\hardwarestore\common\dto\product\CategoryDto.java
+C:\Users\PC\Desktop\HardWareStore\hardware store\construction-shop\common-lib\src\main\java\com\hardwarestore\common\dto\product\CreateProductRequest.java
+C:\Users\PC\Desktop\HardWareStore\hardware store\construction-shop\common-lib\src\main\java\com\hardwarestore\common\dto\product\ErrorResponse.java
+C:\Users\PC\Desktop\HardWareStore\hardware store\construction-shop\common-lib\src\main\java\com\hardwarestore\common\dto\product\ProductDto.java
 C:\Users\PC\Desktop\HardWareStore\hardware store\construction-shop\common-lib\src\main\java\com\hardwarestore\common\events\BaseEvent.java
 C:\Users\PC\Desktop\HardWareStore\hardware store\construction-shop\common-lib\src\main\java\com\hardwarestore\common\events\DeliveryCreatedEvent.java
 C:\Users\PC\Desktop\HardWareStore\hardware store\construction-shop\common-lib\src\main\java\com\hardwarestore\common\events\OrderCancelledEvent.java
