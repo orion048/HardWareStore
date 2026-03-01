@@ -1,7 +1,8 @@
 package com.project.controller;
 
-import com.project.dto.CreateProductRequest;
-import com.project.dto.ProductDto;
+
+import com.hardwarestore.common.dto.product.CreateProductRequest;
+import com.hardwarestore.common.dto.product.ProductDto;
 import com.project.service.ProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -12,10 +13,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/products")
-@RequiredArgsConstructor
 public class ProductController {
 
     private final ProductService productService;
+
+    public ProductController(ProductService productService) {
+        this.productService = productService;
+    }
 
     @PostMapping
     public ResponseEntity<ProductDto> create(@Valid @RequestBody CreateProductRequest request) {

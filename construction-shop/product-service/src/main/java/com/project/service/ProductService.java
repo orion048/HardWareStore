@@ -1,8 +1,8 @@
 package com.project.service;
 
 
-import com.project.dto.CreateProductRequest;
-import com.project.dto.ProductDto;
+import com.hardwarestore.common.dto.product.CreateProductRequest;
+import com.hardwarestore.common.dto.product.ProductDto;
 import com.project.model.CategoryEntity;
 import com.project.model.ProductEntity;
 import com.project.repository.CategoryRepository;
@@ -15,11 +15,18 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class ProductService {
 
-    private final ProductRepository productRepository;
-    private final CategoryRepository categoryRepository;
+        private final ProductRepository productRepository;
+        private final CategoryRepository categoryRepository;
+
+        public ProductService(ProductRepository productRepository,
+                              CategoryRepository categoryRepository) {
+            this.productRepository = productRepository;
+            this.categoryRepository = categoryRepository;
+        }
+
+
 
     @Transactional
     public ProductDto createProduct(CreateProductRequest request) {

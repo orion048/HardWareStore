@@ -9,10 +9,12 @@ import java.math.BigDecimal;
 
 @RestController
 @RequestMapping("/internal/products")
-@RequiredArgsConstructor
 public class InternalProductController {
 
     private final ProductService productService;
+
+    public InternalProductController(ProductService productService) {
+        this.productService = productService; }
 
     @GetMapping("/{id}/price")
     public ResponseEntity<BigDecimal> getPrice(@PathVariable Long id) {

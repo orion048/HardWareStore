@@ -1,4 +1,9 @@
-debug: true
+logging:
+  level:
+    root: INFO
+    org.springframework.web: DEBUG
+    org.hibernate.SQL: DEBUG
+
 
 spring:
   application:
