@@ -13,12 +13,14 @@ spring:
           predicates:
             - Path=/orders/**
           filters:
-            - StripPrefix=1
+            - StripPrefix=0
 
         - id: product-service
           uri: lb://product-service
           predicates:
-            - Path=/products/**, /internal/products/**
+            - Path=/products/**
+            - Path=/internal/products/**
           filters:
-            - StripPrefix=1
+            - StripPrefix=0
+
 
