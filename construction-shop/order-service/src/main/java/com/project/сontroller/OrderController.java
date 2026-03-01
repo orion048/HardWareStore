@@ -1,7 +1,10 @@
 package com.project.сontroller;
 
 import com.hardwarestore.common.dto.order.CreateOrderRequest;
-import com.hardwarestore.common.dto.order.OrderResponse;
+//import com.hardwarestore.common.dto.order.OrderResponse;
+
+import com.project.dto.OrderResponse;
+
 import com.project.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

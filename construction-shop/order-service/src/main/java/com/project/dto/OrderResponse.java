@@ -1,36 +1,30 @@
-package com.project.model;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.hardwarestore.common.order.OrderStatus;
-import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+package com.project.dto;
 
 import java.math.BigDecimal;
 import java.time.Instant;
-import java.util.ArrayList;
+import java.time.LocalDateTime;
 import java.util.List;
 
-@Entity
-@Table(name = "orders")
-public class OrderEntity {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class OrderResponse {
     private Long id;
-
     private Long userId;
-
     private BigDecimal totalAmount;
+    private String status;
+    private Instant createdAt;
+    private List<com.project.dto.OrderItemResponse> items;
 
-    @Enumerated(EnumType.STRING)
-    private OrderStatus status;
+    public OrderResponse(Long id, Long userId, BigDecimal totalAmount, String name, Instant createdAt, List<com.project.dto.OrderItemResponse> itemDtos) {
+        this.id = id;
+        this.userId = userId;
+        this.totalAmount = totalAmount;
+        this.status = name;
+        this.createdAt = createdAt;
+        this.items = itemDtos;
+    }
 
-    private Instant createdAt = Instant.now();
+    public OrderResponse() {
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-    @JsonManagedReference
-    private List<OrderItemEntity> items = new ArrayList<>();
+    }
 
     public Long getId() {
         return id;
@@ -56,11 +50,11 @@ public class OrderEntity {
         this.totalAmount = totalAmount;
     }
 
-    public OrderStatus getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(OrderStatus status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
@@ -72,11 +66,11 @@ public class OrderEntity {
         this.createdAt = createdAt;
     }
 
-    public List<OrderItemEntity> getItems() {
+    public List<OrderItemResponse> getItems() {
         return items;
     }
 
-    public void setItems(List<OrderItemEntity> items) {
+    public void setItems(List<OrderItemResponse> items) {
         this.items = items;
     }
 }

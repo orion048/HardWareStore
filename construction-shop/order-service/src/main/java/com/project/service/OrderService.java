@@ -1,16 +1,24 @@
 package com.project.service;
 
-import com.hardwarestore.common.dto.order.*;
+import com.hardwarestore.common.dto.order.CreateOrderRequest;
+import com.hardwarestore.common.dto.order.OrderItemRequest;
 import com.hardwarestore.common.order.OrderStatus;
+
+import com.project.dto.OrderResponse;
+import com.project.dto.OrderItemResponse;
+
 import com.project.model.OrderEntity;
 import com.project.model.OrderItemEntity;
 import com.project.repository.OrderRepository;
 import com.project.client.ProductClient;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
+
 
 @Service
 @RequiredArgsConstructor
@@ -64,24 +72,27 @@ public class OrderService {
     }
 
     private OrderResponse mapToResponse(OrderEntity entity) {
-        OrderResponse dto = new OrderResponse();
-        dto.setId(entity.getId());
-        dto.setUserId(entity.getUserId());
-        dto.setStatus(entity.getStatus());
-        dto.setCreatedAt(entity.getCreatedAt());
-        dto.setTotalAmount(entity.getTotalAmount());
 
-        dto.setItems(
-                entity.getItems().stream().map(item -> {
-                    OrderItemResponse r = new OrderItemResponse();
-                    r.setProductId(item.getProductId());
-                    r.setQuantity(item.getQuantity());
-                    r.setPrice(item.getPrice());
-                    return r;
-                }).toList()
+        List<OrderItemResponse> items = new ArrayList<>();
+
+        for (OrderItemEntity item : entity.getItems()) {
+            items.add(new OrderItemResponse(
+                    item.getProductId(),
+                    item.getQuantity(),
+                    item.getPrice()
+            ));
+        }
+
+        return new OrderResponse(
+                entity.getId(),
+                entity.getUserId(),
+                entity.getTotalAmount(),
+                entity.getStatus().name(),
+                entity.getCreatedAt(),
+                items
         );
-
-        return dto;
     }
+
+
 }
 
