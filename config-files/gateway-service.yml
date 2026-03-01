@@ -16,7 +16,7 @@ spring:
             - StripPrefix=0
 
         - id: product-service
-          uri: lb://product-service
+          uri: http://localhost:8082
           predicates:
             - Path=/products/**
             - Path=/internal/products/**
