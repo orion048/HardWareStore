@@ -2,6 +2,9 @@ server:
   port: 8084
 
 spring:
+  application:
+    name: user-service
+
   datasource:
     url: jdbc:postgresql://localhost:5432/hardwarestore?currentSchema=user_service
     username: postgres
@@ -10,6 +13,7 @@ spring:
 
   main:
     debug: true
+    web-application-type: servlet   # 🔥 обязательно
 
   jpa:
     hibernate:
