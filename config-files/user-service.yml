@@ -7,12 +7,13 @@ spring:
     username: postgres
     password: orion
     driver-class-name: org.postgresql.Driver
+
   main:
     debug: true
 
   jpa:
     hibernate:
-      ddl-auto: validate     # обязательно validate при Liquibase
+      ddl-auto: validate
     show-sql: true
     properties:
       hibernate:
@@ -22,20 +23,15 @@ spring:
     enabled: true
     change-log: classpath:db/migration/changelog-master.yaml
 
-  logging:
-    level:
-      org.hibernate.SQL: DEBUG
-      org.hibernate.type.descriptor.sql.BasicBinder: TRACE
-      com.project.controller: DEBUG
-      com.project.repository: DEBUG
-      org.springframework: INFO
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    com.project.controller: DEBUG
+    com.project.repository: DEBUG
+    org.springframework: INFO
 
-  thymeleaf:
-    cache: false
-    prefix: classpath:/templates/
-    suffix: .html
-
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka/
+thymeleaf:
+  cache: false
+  prefix: classpath:/templates/
+  suffix: .html
