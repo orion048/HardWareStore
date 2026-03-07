@@ -1,87 +1,62 @@
 package com.project.service;
 
 import com.project.dto.RegisterRequest;
-import com.project.dto.UpdateUserRequest;
-import com.project.model.Role;
-import com.project.model.User;
+import com.project.dto.UserResponse;
+import com.project.model.RoleEntity;
+import com.project.model.UserEntity;
+import com.project.repository.RoleRepository;
 import com.project.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
 
-    @Autowired
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
-    // Регистрация пользователя без шифрования пароля
-    public User registerUser(RegisterRequest request) {
-        if (userRepository.existsByEmail(request.getEmail()) || userRepository.existsByUsername(request.getUsername())) {
-            throw new RuntimeException("Пользователь с таким email или username уже существует");
+    public UserResponse register(RegisterRequest request) {
+
+        if (userRepository.findByEmail(request.getEmail()).isPresent()) {
+            throw new RuntimeException("User already exists");
         }
 
-        User user = new User();
-        user.setUsername(request.getUsername());
+        UserEntity user = new UserEntity();
         user.setEmail(request.getEmail());
-        user.setPassword(request.getPassword()); // ❌ без шифрования
-        user.setRole(Role.CUSTOMER);
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        user.setFirstName(request.getFirstName());
+        user.setLastName(request.getLastName());
 
-        return userRepository.save(user);
+        RoleEntity role = roleRepository.findByName("CUSTOMER")
+                .orElseThrow(() -> new RuntimeException("Role not found"));
+
+        user.getRoles().add(role);
+
+        UserEntity saved = userRepository.save(user);
+
+        return mapToResponse(saved);
     }
 
-    public User updateUser(Long id, UpdateUserRequest request) {
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Пользователь не найден"));
-
-        if (request.getEmail() != null) user.setEmail(request.getEmail());
-        if (request.getUsername() != null) user.setUsername(request.getUsername());
-
-        return userRepository.save(user);
+    public UserResponse getByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .map(this::mapToResponse)
+                .orElseThrow(() -> new RuntimeException("User not found"));
     }
 
-    public Optional<User> findByUsername(String username) {
-        return userRepository.findByUsername(username);
+    private UserResponse mapToResponse(UserEntity user) {
+        UserResponse dto = new UserResponse();
+        dto.setId(user.getId());
+        dto.setEmail(user.getEmail());
+        dto.setFirstName(user.getFirstName());
+        dto.setLastName(user.getLastName());
+        dto.setRoles(user.getRoles().stream().map(RoleEntity::getName).collect(Collectors.toSet()));
+        return dto;
     }
-
-    public Optional<User> findByEmail(String email) {
-        return userRepository.findByEmail(email);
-    }
-
-    public boolean hasRole(Long userId, Role role) {
-        return userRepository.findById(userId)
-                .map(user -> user.getRole().equals(role))
-                .orElse(false);
-    }
-
-    public Optional<User> findByName(String name) {
-        return userRepository.findByUsername(name);
-    }
-
-    public Optional<User> getUserById(Long id) {
-        return userRepository.findById(id);
-    }
-
-    public void delete(Long id) {
-        userRepository.deleteById(id);
-    }
-
-    public List<User> getAll() {
-        return userRepository.findAll();
-    }
-
-    public User save(User user) {
-        return userRepository.save(user);
-    }
-
-
-
 }
+

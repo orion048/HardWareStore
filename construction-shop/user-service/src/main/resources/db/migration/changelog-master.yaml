@@ -1,0 +1,12 @@
+databaseChangeLog:
+  - include:
+      file: db/migration/changesets/user-tables.yaml
+
+  - include:
+      file: db/migration/changesets/users.yaml
+
+  - include:
+      file: db/migration/changesets/user-roles.yaml
+
+  - include:
+      file: db/migration/changesets/insert-default-roles.yaml
