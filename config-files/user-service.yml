@@ -38,8 +38,10 @@ logging:
     liquibase.lockservice: DEBUG
     liquibase.servicelocator: DEBUG
 
-
 thymeleaf:
   cache: false
   prefix: classpath:/templates/
   suffix: .html
+
+jwt:
+  secret: "my-super-secret-key-1234567890"
