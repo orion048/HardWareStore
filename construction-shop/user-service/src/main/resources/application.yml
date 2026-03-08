@@ -18,13 +18,3 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka/
-logging:
-  level:
-    root: INFO
-    org.springframework: DEBUG
-    org.springframework.boot: DEBUG
-    org.springframework.web: DEBUG
-    org.springframework.context: DEBUG
-    org.springframework.beans: DEBUG
-    org.springframework.cloud: DEBUG
-    org.springframework.boot.autoconfigure: TRACE
