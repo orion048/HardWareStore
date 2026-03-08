@@ -35,6 +35,12 @@
 
     <dependencies>
 
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+        </dependency>
+
+
         <!-- Web (Tomcat) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

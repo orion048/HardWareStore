@@ -1,6 +1,6 @@
 databaseChangeLog:
   - include:
-      file: db/migration/changesets/user-tables.yaml
+      file: db/migration/changesets/roles.yaml
 
   - include:
       file: db/migration/changesets/users.yaml
