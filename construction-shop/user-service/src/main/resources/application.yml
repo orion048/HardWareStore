@@ -2,7 +2,6 @@ spring:
   application:
     name: user-service
 
-  # Локальный fallback для Liquibase
   liquibase:
     enabled: true
     change-log: classpath:db/migration/changelog-master.yaml
@@ -22,8 +21,6 @@ spring:
         initial-interval: 2000
         multiplier: 1.5
         max-interval: 10000
-
-      # КРИТИЧЕСКОЕ — разрешает внешнему YAML перезаписывать локальный
       allow-override: true
       override-none: true
 
@@ -38,7 +35,6 @@ logging:
     liquibase.lockservice: DEBUG
     liquibase.servicelocator: DEBUG
 
-    # Логи загрузки конфигов — покажут, применяется ли внешний YAML
     org.springframework.boot.context.config: DEBUG
     org.springframework.cloud.config: DEBUG
     org.springframework.core.env: DEBUG
