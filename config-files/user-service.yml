@@ -29,11 +29,11 @@ spring:
 
 logging:
   level:
-    org.hibernate.SQL: DEBUG
-    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
-    com.project.controller: DEBUG
-    com.project.repository: DEBUG
-    org.springframework: INFO
+    liquibase: TRACE
+    liquibase.changelog: TRACE
+    liquibase.parser: TRACE
+    liquibase.integration: TRACE
+
 
 thymeleaf:
   cache: false
