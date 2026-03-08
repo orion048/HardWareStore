@@ -29,10 +29,14 @@ spring:
 
 logging:
   level:
-    liquibase: TRACE
-    liquibase.changelog: TRACE
-    liquibase.parser: TRACE
-    liquibase.integration: TRACE
+    liquibase: DEBUG
+    liquibase.changelog: DEBUG
+    liquibase.parser: DEBUG
+    liquibase.integration: DEBUG
+    liquibase.executor: DEBUG
+    liquibase.database: DEBUG
+    liquibase.lockservice: DEBUG
+    liquibase.servicelocator: DEBUG
 
 
 thymeleaf:
