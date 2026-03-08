@@ -10,9 +10,3 @@ databaseChangeLog:
 
   - include:
       file: db/migration/changesets/004-insert-default-roles.yaml
-
-  - include:
-      file: db/migration/changesets/005-add-enabled-column.yaml
-
-  - include:
-      file: db/migration/changesets/006-add-first-name-column.yaml

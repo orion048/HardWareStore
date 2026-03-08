@@ -9,6 +9,7 @@ databaseChangeLog:
               - column:
                   name: name
                   value: ROLE_USER
+
         - insert:
             tableName: roles
             columns:
