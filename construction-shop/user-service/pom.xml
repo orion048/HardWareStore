@@ -4,6 +4,7 @@
 
     <modelVersion>4.0.0</modelVersion>
 
+    <!-- Spring Boot parent -->
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -19,6 +20,7 @@
         <java.version>17</java.version>
     </properties>
 
+    <!-- Spring Cloud BOM (ВАЖНО: 2023.0.3) -->
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -33,7 +35,7 @@
 
     <dependencies>
 
-        <!-- Web (включает Tomcat) -->
+        <!-- Web (Tomcat) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -88,6 +90,12 @@
             <artifactId>spring-cloud-starter-config</artifactId>
         </dependency>
 
+        <!-- Validation -->
+        <dependency>
+            <groupId>jakarta.validation</groupId>
+            <artifactId>jakarta.validation-api</artifactId>
+        </dependency>
+
         <!-- Lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -95,20 +103,14 @@
             <optional>true</optional>
         </dependency>
 
-        <!-- Validation -->
-        <dependency>
-            <groupId>jakarta.validation</groupId>
-            <artifactId>jakarta.validation-api</artifactId>
-        </dependency>
-
-        <!-- common-lib -->
+        <!-- Общая библиотека -->
         <dependency>
             <groupId>com.hardwarestore</groupId>
             <artifactId>common-lib</artifactId>
             <version>1.0.1</version>
         </dependency>
 
-        <!-- Tests -->
+        <!-- Тесты -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -116,5 +118,14 @@
         </dependency>
 
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

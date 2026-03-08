@@ -1,21 +1,19 @@
-databaseChangeLog:
-  - changeSet:
-      id: 1-create-roles
-      author: armen
-      changes:
-        - createTable:
-            tableName: roles
-            columns:
-              - column:
-                  name: id
-                  type: BIGSERIAL
-                  constraints:
-                    primaryKey: true
-                    nullable: false
-
-              - column:
-                  name: name
-                  type: VARCHAR(255)
-                  constraints:
-                    nullable: false
-                    unique: true
+- changeSet:
+    id: 1-create-roles
+    author: armen
+    changes:
+      - createTable:
+          tableName: roles
+          columns:
+            - column:
+                name: id
+                type: BIGSERIAL
+                constraints:
+                  primaryKey: true
+                  nullable: false
+            - column:
+                name: name
+                type: VARCHAR(255)
+                constraints:
+                  nullable: false
+                  unique: true
