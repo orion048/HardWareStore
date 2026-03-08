@@ -1,0 +1,13 @@
+databaseChangeLog:
+  - changeSet:
+      id: add-first-name-column
+      author: armen
+      changes:
+        - addColumn:
+            tableName: users
+            columns:
+              - column:
+                  name: first_name
+                  type: VARCHAR(100)
+                  constraints:
+                    nullable: false
