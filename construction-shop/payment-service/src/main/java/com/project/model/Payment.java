@@ -1,8 +1,6 @@
 package com.project.model;
 
-import com.hardwarestore.common.payment.PaymentStatus;
 import jakarta.persistence.*;
-
 import java.time.LocalDateTime;
 
 @Entity
@@ -58,7 +56,7 @@ public class Payment {
         this.createdAt = createdAt;
     }
 
-    public void setStatus(com.project.model.PaymentStatus paymentStatus) {
-        this.status = status;
+    public void setStatus(PaymentStatus paymentStatus) {
+        this.status = paymentStatus;
     }
 }
