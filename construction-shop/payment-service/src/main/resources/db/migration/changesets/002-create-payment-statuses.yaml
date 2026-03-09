@@ -1,0 +1,21 @@
+databaseChangeLog:
+  - changeSet:
+      id: 002-create-payment-statuses
+      author: armen
+      changes:
+        - createTable:
+            tableName: payment_statuses
+            columns:
+              - column:
+                  name: id
+                  type: BIGSERIAL
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: VARCHAR(20)
+                  constraints:
+                    unique: true
+                    nullable: false
