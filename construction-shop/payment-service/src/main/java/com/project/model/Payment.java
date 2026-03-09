@@ -16,7 +16,9 @@ public class Payment {
     private Double amount;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private PaymentStatus status;
+
 
     private LocalDateTime createdAt = LocalDateTime.now();
 
