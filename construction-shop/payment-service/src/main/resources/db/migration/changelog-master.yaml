@@ -1,9 +1,9 @@
 databaseChangeLog:
   - include:
-      file: db/migration/changesets/001-create-payments.yaml
+      file: db/migration/changesets/001-create-payment-statuses.yaml
 
   - include:
-      file: db/migration/changesets/002-create-payment-statuses.yaml
+      file: db/migration/changesets/002-insert-payment-statuses.yaml
 
   - include:
-      file: db/migration/changesets/003-insert-payment-statuses.yaml
+      file: db/migration/changesets/003-create-payments.yaml
