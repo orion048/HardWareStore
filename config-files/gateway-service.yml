@@ -33,3 +33,10 @@ spring:
             - Path=/products/**
           filters:
             - StripPrefix=0
+
+        - id: user-service
+          uri: lb://user-service
+          predicates:
+            - Path=/users/**
+          filters:
+            - StripPrefix=0
