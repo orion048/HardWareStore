@@ -1,6 +1,4 @@
-package com.project.сontroller;
-
-
+package com.project.controller;
 
 import com.project.model.Payment;
 import com.project.model.PaymentStatus;
