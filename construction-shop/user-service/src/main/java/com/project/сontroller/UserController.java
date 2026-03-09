@@ -31,8 +31,14 @@ public class UserController {
 
     @GetMapping("/by-email")
     public ResponseEntity<UserResponse> getByEmail(@RequestParam String email) {
-        return ResponseEntity.ok(userService.getByEmail(email));
+        UserResponse user = userService.getByEmail(email);
+        if (user == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(user);
     }
+
+
 
     // ---------------------------
     // INTERNAL ENDPOINTS (для order-service, gateway, saga)
@@ -40,6 +46,11 @@ public class UserController {
 
     @GetMapping("/internal/{email}")
     public ResponseEntity<UserResponse> getInternal(@PathVariable String email) {
-        return ResponseEntity.ok(userService.getByEmail(email));
+        UserResponse user = userService.getByEmail(email);
+        if (user == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(user);
     }
+
 }
