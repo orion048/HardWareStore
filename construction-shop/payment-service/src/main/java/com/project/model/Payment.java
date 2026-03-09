@@ -1,34 +1,24 @@
-package com.project.Model;
+package com.project.model;
 
+import com.hardwarestore.common.payment.PaymentStatus;
 import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "payments", schema = "payment_service")
+@Table(name = "payments")
 public class Payment {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private Long orderId;
-    private double amount;
-    private String status; // например: PENDING, SUCCESS, FAILED
-    private LocalDateTime createdAt;
+    private Double amount;
 
-    public Payment() {
-        this.createdAt = LocalDateTime.now();
-    }
+    @Enumerated(EnumType.STRING)
+    private PaymentStatus status;
 
-    public Payment(Long orderId, double amount, String status) {
-        this.orderId = orderId;
-        this.amount = amount;
-        this.status = status;
-        this.createdAt = LocalDateTime.now();
-    }
-
-    // getters/setters
-
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     public Long getId() {
         return id;
@@ -46,20 +36,16 @@ public class Payment {
         this.orderId = orderId;
     }
 
-    public double getAmount() {
+    public Double getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(Double amount) {
         this.amount = amount;
     }
 
-    public String getStatus() {
+    public PaymentStatus getStatus() {
         return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -68,5 +54,9 @@ public class Payment {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public void setStatus(com.project.model.PaymentStatus paymentStatus) {
+        this.status = status;
     }
 }

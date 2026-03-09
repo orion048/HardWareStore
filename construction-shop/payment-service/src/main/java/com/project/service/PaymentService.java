@@ -1,34 +1,36 @@
-package com.project.Service;
+package com.project.service;
 
-import com.project.Event.PaymentEventProducer;
-import com.project.Model.Payment;
-import com.project.Reposintory.PaymentRepository;
+import com.project.model.Payment;
+import com.project.model.PaymentStatus;
+import com.project.repository.PaymentRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class PaymentService {
-
     private final PaymentRepository paymentRepository;
-    private final PaymentEventProducer eventProducer;
 
-    public PaymentService(PaymentRepository paymentRepository,
-                          PaymentEventProducer eventProducer) {
+    public PaymentService(PaymentRepository paymentRepository) {
         this.paymentRepository = paymentRepository;
-        this.eventProducer = eventProducer;
     }
 
-    public Payment processPayment(Long orderId, double amount) {
-        Payment payment = new Payment(orderId, amount, "SUCCESS");
-        Payment saved = paymentRepository.save(payment);
+    public Payment createPayment(Long orderId, Double amount) {
+        Payment payment = new Payment();
+        payment.setOrderId(orderId);
+        payment.setAmount(amount);
+        payment.setStatus(PaymentStatus.PENDING);
+        return paymentRepository.save(payment);
+    }
 
-        // Формируем JSON события
-        String eventPayload = "{ \"orderId\": " + saved.getOrderId() +
-                ", \"paymentId\": " + saved.getId() +
-                ", \"status\": \"" + saved.getStatus() + "\" }";
+    public Payment updateStatus(Long paymentId, PaymentStatus status) {
+        Payment payment = paymentRepository.findById(paymentId)
+                .orElseThrow(() -> new RuntimeException("Payment not found"));
+        payment.setStatus(status);
+        return paymentRepository.save(payment);
+    }
 
-        // Отправляем событие в Kafka
-        eventProducer.sendOrderPaidEvent(eventPayload);
-
-        return saved;
+    public List<Payment> getPaymentsByOrder(Long orderId) {
+        return paymentRepository.findByOrderId(orderId);
     }
 }

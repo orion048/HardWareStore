@@ -5,6 +5,7 @@ databaseChangeLog:
       changes:
         - createTable:
             tableName: payment_statuses
+            schemaName: payment_service
             columns:
               - column:
                   name: id
