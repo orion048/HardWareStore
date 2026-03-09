@@ -35,7 +35,7 @@ spring:
             - StripPrefix=0
 
         - id: user-service
-          uri: lb://user-service
+          uri: lb://USER-SERVICE
           predicates:
             - Path=/users/**
           filters:
