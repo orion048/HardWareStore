@@ -1,7 +1,7 @@
-package com.project.Controller;
+package com.project.сontroller;
 
-import com.project.Model.Payment;
-import com.project.Service.PaymentService;
+import com.project.model.Payment;
+import com.project.service.PaymentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

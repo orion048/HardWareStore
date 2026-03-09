@@ -40,3 +40,10 @@ spring:
             - Path=/users/**
           filters:
             - StripPrefix=0
+
+        - id: payment-service
+          uri: lb://payment-service
+          predicates:
+            - Path=/payments/**
+          filters:
+            - StripPrefix=0
