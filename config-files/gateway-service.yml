@@ -42,7 +42,7 @@ spring:
             - StripPrefix=0
 
         - id: payment-service
-          uri: lb://payment-service
+          uri: lb://PAYMENT-SERVICE
           predicates:
             - Path=/payments/**
           filters:
