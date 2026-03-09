@@ -1,6 +1,15 @@
 server:
   port: 8090
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    gateway:
+      enabled: true
+
 spring:
   application:
     name: gateway-service
@@ -14,21 +23,21 @@ spring:
 
       routes:
         - id: order-service
-          uri: lb://order-service
+          uri: lb://ORDER-SERVICE
           predicates:
             - Path=/orders/**
           filters:
             - StripPrefix=0
 
         - id: product-service-internal
-          uri: lb://product-service
+          uri: lb://PRODUCT-SERVICE
           predicates:
             - Path=/internal/products/**
           filters:
             - StripPrefix=0
 
         - id: product-service-public
-          uri: lb://product-service
+          uri: lb://PRODUCT-SERVICE
           predicates:
             - Path=/products/**
           filters:
@@ -47,4 +56,3 @@ spring:
             - Path=/payments/**
           filters:
             - StripPrefix=0
-
