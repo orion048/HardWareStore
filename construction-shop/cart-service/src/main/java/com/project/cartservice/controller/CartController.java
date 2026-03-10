@@ -1,11 +1,11 @@
-package com.project.cartservice.Controller;
+package com.project.cartservice.controller;
 
-import com.project.cartservice.Model.CartItem;
-import com.project.cartservice.Service.CartService;
+import com.hardwarestore.common.dto.cart.AddToCartRequest;
+import com.hardwarestore.common.dto.cart.CartResponse;
+import com.project.cartservice.service.CartService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/cart")
@@ -17,19 +17,30 @@ public class CartController {
         this.cartService = cartService;
     }
 
-    @PostMapping
-    public ResponseEntity<CartItem> addItem(@RequestBody CartItem item) {
-        return ResponseEntity.ok(cartService.addItem(item));
+    @PostMapping("/{userId}/items")
+    public ResponseEntity<CartResponse> addItem(
+            @PathVariable Long userId,
+            @Valid @RequestBody AddToCartRequest request
+    ) {
+        return ResponseEntity.ok(cartService.addItem(userId, request));
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<List<CartItem>> getUserCart(@PathVariable Long userId) {
-        return ResponseEntity.ok(cartService.getUserCart(userId));
+    public ResponseEntity<CartResponse> getCart(@PathVariable Long userId) {
+        return ResponseEntity.ok(cartService.getCart(userId));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> removeItem(@PathVariable Long id) {
-        cartService.removeItem(id);
+    @DeleteMapping("/{userId}/items/{productId}")
+    public ResponseEntity<CartResponse> removeItem(
+            @PathVariable Long userId,
+            @PathVariable Long productId
+    ) {
+        return ResponseEntity.ok(cartService.removeItem(userId, productId));
+    }
+
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<Void> clearCart(@PathVariable Long userId) {
+        cartService.clearCart(userId);
         return ResponseEntity.noContent().build();
     }
 }
