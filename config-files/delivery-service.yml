@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: payment-service
+    name: delivery-service
 
   datasource:
     url: jdbc:postgresql://localhost:5432/hardwarestore?currentSchema=delivery_service
