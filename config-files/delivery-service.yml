@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: delivery-service
+    name: payment-service
 
   datasource:
     url: jdbc:postgresql://localhost:5432/hardwarestore?currentSchema=delivery_service
@@ -12,17 +12,28 @@ spring:
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
     show-sql: true
 
-  kafka:
-    bootstrap-servers: localhost:9092
-    consumer:
-      group-id: delivery-service
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+  liquibase:
+    enabled: true
+    change-log: classpath:db/migration/changelog-master.yaml
+    default-schema: delivery_service
+
+  logging:
+    level:
+      liquibase: DEBUG
+      liquibase.changelog: DEBUG
+      liquibase.parser: DEBUG
+      liquibase.integration: DEBUG
+      liquibase.executor: DEBUG
+      liquibase.database: DEBUG
+      liquibase.lockservice: DEBUG
+      liquibase.servicelocator: DEBUG
 
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka/
+
+debug: true
