@@ -10,6 +10,7 @@ spring:
     username: postgres
     password: orion
     driver-class-name: org.postgresql.Driver
+
   jpa:
     hibernate:
       ddl-auto: validate
@@ -20,29 +21,29 @@ spring:
     change-log: classpath:db/migration/changelog-master.yaml
     default-schema: delivery_service
 
-  management:
-    endpoints:
-      web:
-        exposure:
-          include: "*"
-    endpoint:
-      health:
-        show-details: always
-
-  logging:
-    level:
-      liquibase: DEBUG
-      liquibase.changelog: DEBUG
-      liquibase.parser: DEBUG
-      liquibase.integration: DEBUG
-      liquibase.executor: DEBUG
-      liquibase.database: DEBUG
-      liquibase.lockservice: DEBUG
-      liquibase.servicelocator: DEBUG
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
 
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka/
+
+logging:
+  level:
+    liquibase: DEBUG
+    liquibase.changelog: DEBUG
+    liquibase.parser: DEBUG
+    liquibase.integration: DEBUG
+    liquibase.executor: DEBUG
+    liquibase.database: DEBUG
+    liquibase.lockservice: DEBUG
+    liquibase.servicelocator: DEBUG
 
 debug: true
