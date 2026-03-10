@@ -35,4 +35,7 @@ public class DeliveryRequest {
     public void setAddress(String address) {
         this.address = address;
     }
+
+    public DeliveryRequest() {
+    }
 }
