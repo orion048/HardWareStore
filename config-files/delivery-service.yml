@@ -20,6 +20,15 @@ spring:
     change-log: classpath:db/migration/changelog-master.yaml
     default-schema: delivery_service
 
+  management:
+    endpoints:
+      web:
+        exposure:
+          include: "*"
+    endpoint:
+      health:
+        show-details: always
+
   logging:
     level:
       liquibase: DEBUG
