@@ -2,6 +2,7 @@ com\hardwarestore\common\dto\product\CategoryDto.class
 com\hardwarestore\common\events\DeliveryCreatedEvent.class
 com\hardwarestore\common\events\PaymentCompletedEvent.class
 com\hardwarestore\common\delivery\DeliveryStatus.class
+com\hardwarestore\common\dto\cart\CartItemResponse.class
 com\hardwarestore\common\dto\order\CreateOrderRequest.class
 com\hardwarestore\common\dto\order\OrderItemRequest.class
 com\hardwarestore\common\dto\order\OrderItemResponse.class
@@ -9,6 +10,7 @@ com\hardwarestore\common\dto\delivery\DeliveryRequest.class
 com\hardwarestore\common\events\OrderCancelledEvent.class
 com\hardwarestore\common\dto\delivery\DeliveryResponse.class
 com\hardwarestore\common\api\ErrorResponse.class
+com\hardwarestore\common\dto\cart\CartResponse.class
 com\hardwarestore\common\dto\product\ErrorResponse.class
 com\hardwarestore\common\payment\PaymentStatus.class
 com\hardwarestore\common\events\BaseEvent.class
@@ -19,3 +21,4 @@ com\hardwarestore\common\dto\payment\PaymentRequest.class
 com\hardwarestore\common\dto\payment\PaymentResponse.class
 com\hardwarestore\common\dto\product\ProductDto.class
 com\hardwarestore\common\events\PaymentFailedEvent.class
+com\hardwarestore\common\dto\cart\AddToCartRequest.class

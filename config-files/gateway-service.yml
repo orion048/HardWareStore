@@ -63,3 +63,10 @@ spring:
             - Path=/deliveries/**
           filters:
             - StripPrefix=0
+
+        - id: cart-service
+          uri: lb://CART-SERVICE
+          predicates:
+            - Path=/cart/**
+          filters:
+            - StripPrefix=0

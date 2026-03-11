@@ -1,5 +1,8 @@
 E:\Project\HardWareStore\construction-shop\common-lib\src\main\java\com\hardwarestore\common\api\ErrorResponse.java
 E:\Project\HardWareStore\construction-shop\common-lib\src\main\java\com\hardwarestore\common\delivery\DeliveryStatus.java
+E:\Project\HardWareStore\construction-shop\common-lib\src\main\java\com\hardwarestore\common\dto\cart\AddToCartRequest.java
+E:\Project\HardWareStore\construction-shop\common-lib\src\main\java\com\hardwarestore\common\dto\cart\CartItemResponse.java
+E:\Project\HardWareStore\construction-shop\common-lib\src\main\java\com\hardwarestore\common\dto\cart\CartResponse.java
 E:\Project\HardWareStore\construction-shop\common-lib\src\main\java\com\hardwarestore\common\dto\delivery\DeliveryRequest.java
 E:\Project\HardWareStore\construction-shop\common-lib\src\main\java\com\hardwarestore\common\dto\delivery\DeliveryResponse.java
 E:\Project\HardWareStore\construction-shop\common-lib\src\main\java\com\hardwarestore\common\dto\order\CreateOrderRequest.java
