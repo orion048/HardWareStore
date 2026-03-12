@@ -1,9 +1,6 @@
 package com.hardwarestore.common.events;
-import java.util.UUID;
-import com.hardwarestore.common.events.BaseEvent;
 
 public class DeliveryCreatedEvent extends BaseEvent {
-
     private final Long orderId;
     private final Long deliveryId;
 

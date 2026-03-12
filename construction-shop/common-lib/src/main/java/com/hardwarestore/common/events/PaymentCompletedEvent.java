@@ -1,7 +1,6 @@
 package com.hardwarestore.common.events;
 
 public class PaymentCompletedEvent extends BaseEvent {
-
     private final Long orderId;
     private final Long paymentId;
 
@@ -11,11 +10,6 @@ public class PaymentCompletedEvent extends BaseEvent {
         this.paymentId = paymentId;
     }
 
-    public Long getOrderId() {
-        return orderId;
-    }
-
-    public Long getPaymentId() {
-        return paymentId;
-    }
+    public Long getOrderId() { return orderId; }
+    public Long getPaymentId() { return paymentId; }
 }
