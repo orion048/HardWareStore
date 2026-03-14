@@ -1,4 +1,5 @@
 com\hardwarestore\common\dto\product\CategoryDto.class
+com\hardwarestore\common\events\DeliveryCreatedEvent.class
 com\hardwarestore\common\events\PaymentCompletedEvent.class
 com\hardwarestore\common\delivery\DeliveryStatus.class
 com\hardwarestore\common\dto\cart\CartItemResponse.class
