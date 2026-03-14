@@ -1,0 +1,13 @@
+databaseChangeLog:
+  - changeSet:
+      id: add-cancel-reason-to-orders
+      author: armen
+      changes:
+        - addColumn:
+            tableName: orders
+            columns:
+              - column:
+                  name: cancel_reason
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: true

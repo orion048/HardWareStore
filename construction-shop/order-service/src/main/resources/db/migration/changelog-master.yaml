@@ -3,3 +3,5 @@ databaseChangeLog:
       file: db/migration/changesets/01-create-orders.yaml
   - include:
       file: db/migration/changesets/02-create-order-items.yaml
+  - include:
+      file: db/migration/changesets/03-add-cancel-reason-to-orders.yaml

@@ -8,4 +8,8 @@ import lombok.Data;
 public class OrderPaidEvent {
     private Long orderId;
     private Long paymentId;
+
+    public OrderPaidEvent(Long orderId) {
+        this.orderId = orderId;
+    }
 }

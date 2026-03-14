@@ -7,26 +7,35 @@ import com.hardwarestore.common.order.OrderStatus;
 import com.project.dto.OrderResponse;
 import com.project.dto.OrderItemResponse;
 
+import com.project.event.OrderCancelledEvent;
+import com.project.event.OrderDeliveredEvent;
+import com.project.event.OrderPaidEvent;
 import com.project.model.OrderEntity;
 import com.project.model.OrderItemEntity;
+import com.project.producer.OrderEventProducer;
 import com.project.repository.OrderRepository;
 import com.project.client.ProductClient;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class OrderService {
 
     private final OrderRepository orderRepository;
     private final ProductClient productClient;
+    private final OrderEventProducer eventProducer;
 
+    // -----------------------------
+    // CREATE ORDER
+    // -----------------------------
     public OrderResponse createOrder(CreateOrderRequest request) {
 
         OrderEntity order = new OrderEntity();
@@ -38,7 +47,6 @@ public class OrderService {
         for (OrderItemRequest itemReq : request.getItems()) {
 
             BigDecimal price = productClient.getProductPrice(itemReq.getProductId());
-            //BigDecimal price = itemReq.getPrice(); // временно
 
             OrderItemEntity item = new OrderItemEntity();
             item.setProductId(itemReq.getProductId());
@@ -58,6 +66,9 @@ public class OrderService {
         return mapToResponse(saved);
     }
 
+    // -----------------------------
+    // GET ORDER
+    // -----------------------------
     public OrderResponse getOrder(Long id) {
         return orderRepository.findById(id)
                 .map(this::mapToResponse)
@@ -71,6 +82,55 @@ public class OrderService {
                 .toList();
     }
 
+    // -----------------------------
+    // APPROVE ORDER (PAYMENT SUCCESS)
+    // -----------------------------
+    public void approveOrder(Long orderId, Long paymentId) {
+        OrderEntity order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("Order not found: " + orderId));
+
+        order.setStatus(OrderStatus.PAID);
+        orderRepository.save(order);
+
+        eventProducer.sendOrderPaid(new OrderPaidEvent(orderId, paymentId));
+
+        log.info("Order {} approved (PAID)", orderId);
+    }
+
+    // -----------------------------
+    // CANCEL ORDER
+    // -----------------------------
+    public void cancelOrder(Long orderId, String reason) {
+        OrderEntity order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("Order not found: " + orderId));
+
+        order.setStatus(OrderStatus.CANCELLED);
+        order.setCancelReason(reason);
+        orderRepository.save(order);
+
+        eventProducer.sendOrderCancelled(new OrderCancelledEvent(orderId, reason));
+
+        log.warn("Order {} cancelled. Reason: {}", orderId, reason);
+    }
+
+    // -----------------------------
+    // COMPLETE ORDER (DELIVERY SUCCESS)
+    // -----------------------------
+    public void completeOrder(Long orderId) {
+        OrderEntity order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("Order not found: " + orderId));
+
+        order.setStatus(OrderStatus.DELIVERED);
+        orderRepository.save(order);
+
+        eventProducer.sendOrderDelivered(new OrderDeliveredEvent(orderId));
+
+        log.info("Order {} completed (DELIVERED)", orderId);
+    }
+
+    // -----------------------------
+    // MAPPER
+    // -----------------------------
     private OrderResponse mapToResponse(OrderEntity entity) {
 
         List<OrderItemResponse> items = new ArrayList<>();
@@ -92,7 +152,4 @@ public class OrderService {
                 items
         );
     }
-
-
 }
-

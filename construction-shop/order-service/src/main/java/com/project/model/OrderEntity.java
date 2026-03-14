@@ -32,6 +32,16 @@ public class OrderEntity {
     @JsonManagedReference
     private List<OrderItemEntity> items = new ArrayList<>();
 
+    private String cancelReason;
+
+    public String getCancelReason() {
+        return cancelReason;
+    }
+
+    public void setCancelReason(String cancelReason) {
+        this.cancelReason = cancelReason;
+    }
+
     public Long getId() {
         return id;
     }
