@@ -1,4 +1,14 @@
 package com.project.model;
 
 public enum SagaState {
+    STARTED,
+    AWAITING_PAYMENT,
+    PAYMENT_COMPLETED,
+    PAYMENT_FAILED,
+    AWAITING_DELIVERY,
+    DELIVERY_COMPLETED,
+    DELIVERY_FAILED,
+    COMPLETED,
+    COMPENSATED
 }
+
