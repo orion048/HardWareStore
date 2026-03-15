@@ -1,4 +1,4 @@
-package com.project.сontroller;
+package com.project.controller;
 
 import com.hardwarestore.common.dto.order.CreateOrderRequest;
 //import com.hardwarestore.common.dto.order.OrderResponse;

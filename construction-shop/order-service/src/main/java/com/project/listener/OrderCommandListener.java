@@ -25,7 +25,7 @@ public class OrderCommandListener {
     @KafkaListener(topics = "saga.commands.order.approve", groupId = "order-service")
     public void onApprove(ApproveOrderCommand cmd) {
         log.info("ApproveOrderCommand received: {}", cmd);
-        orderService.approveOrder(cmd.getOrderId());
+        orderService.approveOrder(cmd.getOrderId(),cmd.getPaymentId());
     }
 
     @KafkaListener(topics = "saga.commands.order.complete", groupId = "order-service")
