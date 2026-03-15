@@ -24,7 +24,7 @@ spring:
     change-log: classpath:db/migration/changelog-master.yaml
     default-schema: order_service
 
-kafka:
+  kafka:
   producer:
     key-serializer: org.apache.kafka.common.serialization.StringSerializer
     value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
