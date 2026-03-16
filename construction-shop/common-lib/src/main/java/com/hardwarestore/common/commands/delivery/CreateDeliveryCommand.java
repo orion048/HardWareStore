@@ -1,4 +1,6 @@
-package com.hardwarestore.common.events;
+package com.hardwarestore.common.commands.delivery;
+
+import com.hardwarestore.common.events.BaseEvent;
 
 public class CreateDeliveryCommand extends BaseEvent {
     private final Long orderId;
