@@ -58,7 +58,7 @@ public class PaymentService {
             kafkaTemplate.send("saga.events.payment.failed",
                     new PaymentFailedEvent(
                             command.getOrderId(),
-                            34L,
+                            payment.getId(),
                             "Payment failed"
                     )
             );
