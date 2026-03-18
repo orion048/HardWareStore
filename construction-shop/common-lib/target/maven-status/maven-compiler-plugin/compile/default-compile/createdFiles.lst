@@ -10,7 +10,6 @@ com\hardwarestore\common\commands\order\CompleteOrderCommand.class
 com\hardwarestore\common\events\OrderCancelledEvent.class
 com\hardwarestore\common\commands\order\ApproveOrderCommand.class
 com\hardwarestore\common\dto\delivery\DeliveryResponse.class
-com\hardwarestore\common\events\CreateDeliveryCommand.class
 com\hardwarestore\common\api\ErrorResponse.class
 com\hardwarestore\common\payment\PaymentStatus.class
 com\hardwarestore\common\order\OrderStatus.class
@@ -18,6 +17,7 @@ com\hardwarestore\common\events\OrderCompletedEvent.class
 com\hardwarestore\common\dto\payment\PaymentRequest.class
 com\hardwarestore\common\events\PaymentFailedEvent.class
 com\hardwarestore\common\events\ProcessPaymentCommand.class
+com\hardwarestore\common\commands\delivery\CreateDeliveryCommand.class
 com\hardwarestore\common\events\OrderCreatedEvent.class
 com\hardwarestore\common\dto\order\OrderItemRequest.class
 com\hardwarestore\common\dto\order\OrderItemResponse.class
@@ -25,6 +25,7 @@ com\hardwarestore\common\commands\order\CancelOrderCommand.class
 com\hardwarestore\common\dto\cart\CartResponse.class
 com\hardwarestore\common\dto\product\ErrorResponse.class
 com\hardwarestore\common\events\BaseEvent.class
+com\hardwarestore\common\events\OrderDeliveredEvent.class
 com\hardwarestore\common\dto\product\CreateProductRequest.class
 com\hardwarestore\common\dto\order\OrderResponse.class
 com\hardwarestore\common\dto\payment\PaymentResponse.class
