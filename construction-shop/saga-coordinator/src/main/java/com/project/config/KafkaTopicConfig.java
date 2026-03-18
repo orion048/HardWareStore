@@ -8,11 +8,6 @@ import org.springframework.context.annotation.Configuration;
 public class KafkaTopicConfig {
 
     @Bean
-    public NewTopic orderEventsTopic() {
-        return new NewTopic("saga.events.order", 1, (short) 1);
-    }
-
-    @Bean
     public NewTopic paymentEventsTopic() {
         return new NewTopic("saga.events.payment", 1, (short) 1);
     }
@@ -23,8 +18,8 @@ public class KafkaTopicConfig {
     }
 
     @Bean
-    public NewTopic deliveryEventsTopic() {
-        return new NewTopic("saga.events.delivery", 1, (short) 1);
+    public NewTopic paymentCompletedEventsTopic() {
+        return new NewTopic("saga.events.payment.completed", 1, (short) 1);
     }
 
     @Bean
@@ -32,13 +27,56 @@ public class KafkaTopicConfig {
         return new NewTopic("saga.commands.payment", 1, (short) 1);
     }
 
+
     @Bean
-    public NewTopic deliveryCommandsTopic() {
-        return new NewTopic("saga.commands.delivery", 1, (short) 1);
+    public NewTopic orderDeliveredEventsTopic() {
+        return new NewTopic("saga.events.order.delivered", 1, (short) 1);
+    }
+
+    @Bean
+    public NewTopic deliveryStartCommandsTopic() {
+        return new NewTopic("saga.commands.delivery.start", 1, (short) 1);
     }
 
     @Bean
     public NewTopic orderCommandsTopic() {
         return new NewTopic("saga.commands.order", 1, (short) 1);
     }
+
+    @Bean
+    public NewTopic orderEventsTopic() {
+        return new NewTopic("saga.events.order", 1, (short) 1);
+    }
+
+    @Bean
+    public NewTopic orderEventsCancelledTopic() {
+        return new NewTopic("saga.events.order.cancelled", 1, (short) 1);
+    }
+
+    @Bean
+    public NewTopic orderEventsPaidTopic() {
+        return new NewTopic("saga.events.order.paid", 1, (short) 1);
+    }
+
+    @Bean
+    public NewTopic orderEventsDeliveredTopic() {
+        return new NewTopic("saga.events.order.delivered", 1, (short) 1);
+    }
+
+    @Bean
+    public NewTopic orderCommandsCancelTopic() {
+        return new NewTopic("saga.commands.order.cancel", 1, (short) 1);
+    }
+
+    @Bean
+    public NewTopic orderCommandsApproveTopic() {
+        return new NewTopic("saga.commands.order.approve", 1, (short) 1);
+    }
+
+    @Bean
+    public NewTopic orderCommandsCompleteTopic() {
+        return new NewTopic("saga.commands.order.complete", 1, (short) 1);
+    }
+
+
 }
