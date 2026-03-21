@@ -1,7 +1,7 @@
 package com.project.producer;
 
+import com.hardwarestore.common.events.OrderCreatedEvent;
 import com.project.event.OrderCancelledEvent;
-import com.project.event.OrderCreatedEvent;
 import com.project.event.OrderDeliveredEvent;
 import com.project.event.OrderPaidEvent;
 import lombok.RequiredArgsConstructor;

@@ -2,12 +2,14 @@ package com.project.service;
 
 import com.hardwarestore.common.dto.order.CreateOrderRequest;
 import com.hardwarestore.common.dto.order.OrderItemRequest;
+import com.hardwarestore.common.events.OrderCreatedEvent;
 import com.hardwarestore.common.order.OrderStatus;
 
 import com.project.dto.OrderResponse;
 import com.project.dto.OrderItemResponse;
 
 import com.project.event.OrderCancelledEvent;
+
 import com.project.event.OrderDeliveredEvent;
 import com.project.event.OrderPaidEvent;
 import com.project.model.OrderEntity;
@@ -62,6 +64,17 @@ public class OrderService {
         order.setTotalAmount(total);
 
         OrderEntity saved = orderRepository.save(order);
+
+        // после сохранения заказа
+        OrderCreatedEvent event = new OrderCreatedEvent(
+                saved.getId(),
+                saved.getUserId(),
+                saved.getTotalAmount()
+        );
+
+// отправка события в Kafka
+        eventProducer.sendOrderCreated(event);
+
 
         return mapToResponse(saved);
     }
