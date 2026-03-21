@@ -1,5 +1,5 @@
 server:
-  port: 8085   # порт для saga-coordinator
+  port: 8300   # порт для saga-coordinator
 
 spring:
   application:

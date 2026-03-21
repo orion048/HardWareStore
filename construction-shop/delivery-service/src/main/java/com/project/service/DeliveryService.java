@@ -70,4 +70,17 @@ public class DeliveryService {
         dto.setCreatedAt(e.getCreatedAt());
         return dto;
     }
+
+    public DeliveryResponse startDelivery(Long orderId) {
+        DeliveryEntity entity = deliveryRepository.findByOrderId(orderId)
+                .stream()
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Delivery not found for orderId: " + orderId));
+
+        entity.setStatus(DeliveryStatus.IN_PROGRESS);
+        DeliveryEntity saved = deliveryRepository.save(entity);
+
+        return mapToResponse(saved);
+    }
+
 }
